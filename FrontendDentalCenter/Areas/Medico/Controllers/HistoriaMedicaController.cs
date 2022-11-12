@@ -1,6 +1,6 @@
 ﻿using FrontendDentalCenter.Services;
 using Microsoft.AspNetCore.Mvc;
-
+using FrontendDentalCenter.Controllers;
 namespace FrontendDentalCenter.Areas.Medico.Controllers
 {
     [Area("Medico")]
@@ -12,6 +12,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
         }
         public async Task<IActionResult> ListaHistoriaMedica()
         {
+            
             var historiaMedicas = await HistoriaMedicaService.GetHistoriaMedicaIdMedico(1);
             ViewBag.HistoriasMedicasList = historiaMedicas;
             return View();
@@ -19,4 +20,5 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
 
 
     }
+    
 }
