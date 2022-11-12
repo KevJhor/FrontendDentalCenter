@@ -5,16 +5,14 @@ namespace FrontendDentalCenter.Services
 {
     public class MedicoService
     {
-        public static async Task<IEnumerable<PacienteViewModel>> GetPacientes()
+        public static async Task<IEnumerable<MedicoViewModel>> GetMedicos()
         {
-            var url = "http://localhost:5010/api/Paciente";
+            var url = "http://localhost:5010/api/CabMedico/All";
             using var htppClient = new HttpClient();
             using var response = await htppClient.GetAsync(url);
             var apiResponse = await response.Content.ReadAsStringAsync();
-            var pacientes = JsonConvert.DeserializeObject<IEnumerable<PacienteViewModel>>(apiResponse);
-            return pacientes;
+            var Medicos = JsonConvert.DeserializeObject<IEnumerable<MedicoViewModel>>(apiResponse);
+            return Medicos;
         }
-
-
     }
 }

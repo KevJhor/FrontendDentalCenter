@@ -1,0 +1,48 @@
+﻿@using FrontendDentalCenter.Models
+@{
+    var medicos = ViewBag.MedicosList as IEnumerable<MedicoViewModel>;
+}
+
+
+
+
+<table class="table table-striped" id="tbListadoMedicos">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Genero</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in medicos)
+        {
+            <tr>
+                <td>@item.IdMedico</td>
+                <td>@item.Nombre</td>
+                <td>@item.Apellido</td>
+                <td>@item.Genero</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    loadDatatable();
+    function loadDatatable() {
+        //$("#tbListadoMedico").DataTable();
+        let table = $("#tbListadoMedico").DataTable({
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'pdf', 'colvis', 'print']
+
+        });
+
+        table.buttons().container()
+            .insertBefore("#tbListadoMedico_filter");
+    }
+
+</script>
