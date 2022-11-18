@@ -17,5 +17,8 @@ namespace FrontendDentalCenter.Areas.Administracion.Controllers
             ViewBag.MedicosList = Medicos;
             return View();
         }
+
+        
+
     }
 }
