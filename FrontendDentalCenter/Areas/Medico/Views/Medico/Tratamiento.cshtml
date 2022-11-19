@@ -1,0 +1,68 @@
+﻿@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Semana07UESANSalesMVC.WEB.styles.css" asp-append-version="true" />
+
+</head>
+
+<body>
+    <form class="row align-text-top g-1">
+        <div class="col-auto">
+            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Tratamiento</label>
+        </div>
+        <div class="col-sm-3">
+            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+            <select class="form-select" id="inlineFormSelectPref">
+                <option selected></option>
+                <option value="1">Tratamiento1</option>
+                <option value="2">Tratamiento2</option>
+                <option value="3">Tratamiento3</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="button" class="btn btn-primary">Crear Tratamiento</button>
+        </div>
+
+    </form>
+    <form class="row g-2">
+        <div class="col-auto">
+            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Tipo</label>
+        </div>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" id="Tipo" placeholder="">
+        </div>
+        <div class="col-auto">
+            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Duración</label>
+        </div>
+        <div class="col-sm-2">
+            <input type="text" class="form-control" id="Duracion" placeholder="">
+        </div>
+        <div class="col-auto">
+            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">días</label>
+        </div>
+    </form>
+    <form class="row g-2">
+        <div class="col-auto">
+            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Precio</label>
+        </div>
+        <div class="col-sm-1">
+            <input type="text" class="form-control" id="Precio" placeholder="">
+        </div>
+        <div class="col-auto">
+            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Nombre</label>
+        </div>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="Nombre" placeholder="">
+        </div>
+    </form>
+
+</body>
+</html>

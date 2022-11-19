@@ -18,6 +18,10 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             return View();
         }
 
+        public IActionResult RegistrarHistoria()
+        {
+            return View();
+        }
 
     }
     

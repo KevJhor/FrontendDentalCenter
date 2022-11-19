@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Registro de radioterapia";
+}
+<h2>Registre su radioterapia</h2>
+
+<body>
+
+    </div>
+    <div class="container col-md-3" id="form-login">
+        <form method="post" action="@Url.Action("Signin","Security")">
+            <div class="row g-3">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Nombre" aria-label="Nombre">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Apellido" aria-label="Apellido">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Dni" aria-label="Dni">
+                </div>
+                <p></p>
+            </div>
+            <div class="mb-3 row">
+                <div style="height: 250px;">
+                    <img src="https://medlineplus.gov/images/Xray_share.jpg" width="300" height="250" />
+                </div>
+                <p></p>
+                <form enctype="multipart/form-data" action="uploader.php" method="POST">
+                    <input name="uploadedfile" type="file" />
+                    <p></p>
+                    <input type="submit" value="Subir archivo" />
+                </form>
+                <p></p>
+                <div class="mb-3 row">
+                    <button type="submit" class="btn-primary btn">Guardar</button>
+                    <div class="mb-3 row">
+                        <p></p>
+                        <button type="submit" class="btn-primary btn">Cancelar  </button>
+                    </div>
+        </form>
+    </div>
+
+</body>
+
+

@@ -1,0 +1,226 @@
+﻿
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESGISTRO DE HISTORIAL</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <main>
+        <h1>
+            REGISTRAR HISTORIAL <h1>
+                <form class="formulario">
+                    <fieldset class="dato-cliente">
+                        <legend>DATOS DEL CLIENTE</legend>
+                        <label>
+                            <span>NOMBRE:</span>
+                            <input type="text" readonly name="nombre">
+                        </label>
+                        <label for="">
+                            <span>Email:</span>
+                            <input type="email" readonly name="email">
+                        </label>
+
+                        <label for="">
+                            <span>Apellido:</span>
+                            <input type="text" readonly name="apellido">
+                        </label>
+
+                        <label for="">
+                            <span>Telefono:</span>
+                            <input type="text" readonly name="telefono">
+                        </label>
+
+                        <label for="">
+                            <span>DNI:</span>
+                            <input type="text" readonly name="dni">
+                        </label>
+                    </fieldset>
+
+                    <fieldset class="dato-fecha">
+                        <legend>FECHA</legend>
+                        <label>
+                            <span>Fecha:</span>
+                            <input type="date" name="fecha">
+                        </label>
+                        <label>
+                            <span>Hora:</span>
+                            <input type="time" name="hora">
+                        </label>
+                    </fieldset>
+
+                    <fieldset class="dato-receta">
+                        <legend>RECETA</legend>
+                        <label>
+                            <span>Nombre:</span>
+                            <input type="text" name="nombre" readonly>
+                        </label>
+                        <label>
+                            <span>RUC:</span>
+                            <input type="text" name="ruc" readonly>
+                        </label>
+                        <label>
+                            <span>Especialidad:</span>
+                            <input type="text" name="especialidad" readonly>
+                        </label>
+                        <div class="table">
+                            <table border>
+                                <thead>
+                                    <tr>
+                                        <th>Codigo</th>
+                                        <th>Medicamento</th>
+                                        <th>Cantidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>00153</td>
+                                        <td>Panadol</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>00881</td>
+                                        <td>Paracetamol</td>
+                                        <td>3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <label class="observaciones">
+                            <span>Observaciones</span>
+                            <textarea name="Observaciones" rows="10" class="observaciones"></textarea>
+                        </label>
+                    </fieldset>
+                    <div class="botones">
+                        <button class="boton1">Cancelar</button>
+                        <button class="boton2">Guardar</button>
+                        <button class="boton3">Adicionar</button>
+                    </div>
+                </form>
+
+
+
+    </main>
+</body>
+
+
+
+<style>
+
+    form {
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: repeat(2,1fr);
+        grid-auto-rows: auto;
+        grid-gap: 14px;
+    }
+
+    body {
+        font-family: arial narrow;
+    }
+
+    legend {
+        font-size: 17px;
+        font-weight: 900;
+    }
+
+    form .dato-cliente {
+        grid-row: 1 / span 1;
+        /* grid-column: 1 / span 2; */
+    }
+
+    form .dato-fecha {
+        grid-row: 2 / span 1;
+        grid-column: 1 / span 1;
+    }
+
+    form fieldset label {
+        display: block;
+        font-size: 17px;
+        font-weight: 600;
+        margin: 8px 0;
+    }
+
+        form fieldset label input {
+            outline: none;
+            padding: 5px;
+        }
+
+        form fieldset label span {
+            width: 95px;
+            display: inline-block;
+        }
+
+    form fieldset textarea {
+        display: block;
+    }
+
+    form .dato-receta {
+        grid-row: 1 / span 2;
+        max-width: 600px;
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: auto;
+        grid-gap: 5px;
+        /* grid-column: 3 / span 2; */
+    }
+
+    form .botones {
+        grid-row: 3 / span 1;
+        grid-column: 1 / span 2;
+        text-align: center;
+    }
+
+    form .observaciones {
+        grid-row: 4 / span 1;
+        grid-column: 1 / span 2;
+        text-align: center;
+    }
+
+        form .observaciones textarea {
+            /* width: 200px !important; */
+            width: 100%;
+            resize: none;
+        }
+
+    form table {
+        font-size: 18px;
+        width: 200px;
+    }
+
+    form .table table thead tr th {
+        width: 100px !important;
+    }
+
+    form .table {
+        grid-row: 3 / span 1;
+        grid-column: 1 / span 2;
+        width: 100%;
+        /* border: 2px solid red; */
+        margin: auto;
+    }
+
+    .boton1, .boton2, .boton3 {
+        padding: 10px;
+        border: none;
+        font-size: 17px;
+        color: #fff;
+    }
+
+    .boton1 {
+        background-color: #a00;
+        color: #fff;
+    }
+
+    .boton2 {
+        padding: 10px;
+        background-color: #0a0;
+    }
+
+    .boton3 {
+        padding: 10px;
+        background-color: #FFC733;
+    }
+</style>

@@ -13,5 +13,14 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
         {
             return View();
         }
+        public IActionResult Radioterapia()
+        {
+            return View();
+        }
+
+        public IActionResult Tratamiento()
+        {
+            return View();
+        }
     }
 }
