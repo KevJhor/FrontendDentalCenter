@@ -36,37 +36,37 @@ namespace FrontendDentalCenter.Controllers
 
         public async Task<IActionResult> Signin(string correo, string clave)
         {
-              var userLogin = new LoginData() 
-              {
-                  Usuario = correo,
-                  Contraseña = clave
-              };
-              var auth = await UserServices.Login(userLogin);
-              IDMedico = auth.IdMedico;
+            //  var userLogin = new LoginData() 
+            //  {
+            //      Usuario = correo,
+            //      Contraseña = clave
+            //  };
+            //  var auth = await UserServices.Login(userLogin);
+            //  IDMedico = auth.IdMedico;
 
-            if (auth == null)
-                  return RedirectToAction("Login");
-            else
+            //if (auth == null)
+            //      return RedirectToAction("Login");
+            //else
+            //{
+            //    return RedirectToAction("Index", "Medico", new { Area = "Medico" });
+            //}
+
+
+
+
+
+            if (correo == "renzo@uesan.com" && clave == "12345678")
             {
-                return RedirectToAction("Index", "Medico", new { Area = "Medico" });
-            }
-
-            
-             
-                  
-
-            /*if (correo == "admin@uesan.com" && clave == "12345678")
-            {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home", new {Area = "Paciente"});
             }
             else
             {
                 return View("Login");
-            }*/
+            }
         }
-        
-        
-        
+
+
+
     }
 
     

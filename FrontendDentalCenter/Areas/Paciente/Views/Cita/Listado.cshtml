@@ -1,0 +1,48 @@
+﻿@{
+    var paciente = ViewBag.PacienteList as IEnumerable<PacienteViewModel>;
+}
+
+<table class="table table-striped" id="tbListadoCita">
+    <thead>
+        <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>DNI</th>
+            <th>Email</th>
+            <th>Telefono</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in paciente)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Apellido</td>
+                <td>@item.Dni</td>
+                <td>@item.Correo</td>
+                <td>@item.Telefono</td>
+                <td>
+                    <button class="btnm btn-warning btnEditarCliente">Editar</button>
+                    <button class="btnm btn-danger btnEliminarCliente">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+
+    loadDatatable();
+    function loadDatatable(){
+        //$("tbListadoCita").DataTable();
+        let table = $("#tbListadoCita").DataTable({
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'pdf', 'colvis', 'print']
+
+        });
+
+        table.buttons().container()
+            .insertBefore("#tbListadoCita_filter");
+    }
+</script>
