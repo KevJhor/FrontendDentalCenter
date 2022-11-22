@@ -29,7 +29,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             path = await this.helperUpload.UploadFilesAsync(imagen, nombreImagen, Folders.Images);
 
 
-            ViewBag.Mensaje = "Fichero " + nombreImagen + " subido a " + path;
+            ViewBag.Mensaje = "Elemento ingresado satisfactoriamente";
             return View();
 
         }
