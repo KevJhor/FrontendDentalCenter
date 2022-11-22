@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<PathProvider>();
 builder.Services.AddSingleton<HelperUploadFiles>();
+builder.Services.AddSingleton<MedicoController>();
+builder.Services.AddSingleton<SecurityController>();
 //builder.Services.AddTransient
 
 var app = builder.Build();
