@@ -1,0 +1,163 @@
+﻿<div class="alert alert-primary">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Mantenimiento de Tratamientos</h3>
+        </div>
+        <div class="col-md2">
+            <button id="btnAgregarTratamiento" class="btn btn-success">
+                Agregar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalRegistroTratamiento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mantenimiento de Tratamientos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tipo</label>
+                                <input type="text" class="form-control" id="txtTipo" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Duración</label>
+                                <input type="text" class="form-control" id="txtDuracion" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Precio</label>
+                                <input type="text" class="form-control" id="txtPrecio" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Descripcion</label>
+                                <input type="text" class="form-control" id="txtDescripcion" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarTratamiento">Guardar Cambios</button>
+                <input type="hidden" value="-1" id="hidIdTratamiento"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divListadoTratamientos">
+
+</div>
+
+<script>
+    $("#divListadoTratamientos").on('click', 'btnEditarTratamiento',function(){
+        let vIdTratamiento = $(this).attr('data-id');
+        $("#hidIdTratamiento").val(vIdTratamiento);
+        var myModal = new bootstrap.Modal(document.getElementBuId('modalRegistroTratamiento)'));
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Obtener", "Tratamiento", new {Area="Administracion"})',
+            Cache: false,
+            data: {id:vIdTratamiento},
+            success: function (objTratamiento){
+                $("txtTipo").val(objTratamiento.tipo);
+                $("txtDuracion").val(objTratamiento.duracion);
+                $("txtPrecio").val(objTratamiento.precio);
+                $("txtDescripcion").val(objTratamiento.descripcion);
+                myModal.show();
+            }
+        });
+
+    })
+    $("#divListadoTratamientos").on('click', 'btnEliminarTratamiento', function () {
+        let vIdTratamiento = $(this).attr('data-id');
+        if(confirm("¿Está seguro de eliminar el Tratamiento?")==true)
+        {
+            $.ajax({
+                type:"DELETE",
+                url: "@Url.Action("Eliminar", "Tratamiento", new {Area = "Administracion"})",
+                data: {id: vIdTratamiento},
+                cache: false,
+                success: function(exito){
+                    if(exito)
+                    {   
+                        alert("Se eliminó correctamente");
+                        CargarListadoTratamiento();
+                    }else{
+                        alert("No se puede eliminar el tratamiento ya que cuenta con dependientes");
+                    }
+                }
+            });
+        }
+        
+    });
+
+    $("#btnGuardarTratamiento").click(function () {
+        let vIdTratamiento = $("#hidIdTratamiento").val();
+        let vTipo = $("#txtTipo").val()
+        let vDuracion = $("#txtDuracion").val()
+        let vPrecio = $("#txtPrecio").val()
+        let vDescripcion = $("#txtDescripcion").val()
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroTratamiento'))
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Guardar","Tratamiento", new{Area="Administracion"})',
+            Cache:false,
+            data: {
+                idTratamiento: vIdTratamiento,
+                tipo: vTipo,
+                duracionDias: vDuracion,
+                precio: vPrecio,
+                descripcion: vDescripcion
+            },
+            success: function(valorRespuesta){
+                if(valorRespuesta){
+                    alert("Se registró correctamente!");
+                    CargarListadoTratamiento();
+                    myModal.hide();
+                }else{
+                    alert("Ocurrió un error al registrar el Tratamiento!");
+                }
+            }
+        });
+        
+    });
+
+    $("#btnAgregarTratamiento").click(function()
+    {
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroTratamiento'))
+        myModal.show();
+    });
+    CargarListadoTratamiento();
+    function CargarListadoTratamiento(){
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Listado", "Tratamiento", new {Area = "Administracion"})',
+            cache: false,
+            success: function (dataHTML){
+                $("#divListadoTratamientos").html(dataHTML);
+            }
+        });
+    }
+</script>

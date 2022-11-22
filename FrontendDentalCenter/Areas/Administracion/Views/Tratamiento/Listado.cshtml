@@ -1,0 +1,39 @@
+﻿@using FrontendDentalCenter.Areas.Administracion.Models
+@{
+    var tratamientos = ViewBag.TratamientoList as IEnumerable<TratamientoViewModel>;
+}
+<table class="table table-striped" id="tbListadoTratamiento">
+    <thead>
+        <tr>
+            <th>Id Tratamiento</th>
+            <th>Tipo</th>
+            <th>Duración (días)</th>
+            <th>Precio (soles)</th>
+            <th>Descripción</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in tratamientos)
+        {
+            <tr>
+                <td>@item.IdTratamiento</td>
+                <td>@item.Tipo</td>
+                <td>@item.DuracionDias</td>
+                <td>@item.Precio</td>
+                <td>@item.Descripcion</td>
+                <td>
+                    <button class="btn btn-warning btnEditarTratamiento" id="btnEditarTratamiento" data-id=" @item.IdTratamiento">Editar</button>
+                    <button class="btn btn-danger btnEliminarTratamiento" id="btnEliminarTratamiento" data-id="@item.IdTratamiento">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    loadDatatable();
+    function loadDatatable(){
+        $('#tbListadoTratamiento').DataTable();
+    }
+</script>

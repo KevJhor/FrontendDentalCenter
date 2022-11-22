@@ -6,6 +6,11 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
     [Area("Medico")]
     public class HistoriaMedicaController : Controller
     {
+        int idMedico;
+        public HistoriaMedicaController(SecurityController security)
+        {
+            idMedico = security.getIdMedico();
+        }
         public IActionResult Index()
         {
             return View();
@@ -13,7 +18,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
         public async Task<IActionResult> ListaHistoriaMedica()
         {
             
-            var historiaMedicas = await HistoriaMedicaService.GetHistoriaMedicaIdMedico(1);
+            var historiaMedicas = await HistoriaMedicaService.GetHistoriaMedicaIdMedico(idMedico);
             ViewBag.HistoriasMedicasList = historiaMedicas;
             return View();
         }

@@ -10,6 +10,10 @@ namespace FrontendDentalCenter.Controllers
         
 
         private int IDMedico;
+        public SecurityController()
+        {
+            
+        }
         public int getIdMedico()
         {
             return IDMedico;
