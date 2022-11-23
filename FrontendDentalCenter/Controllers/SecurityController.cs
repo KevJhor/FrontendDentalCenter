@@ -10,10 +10,6 @@ namespace FrontendDentalCenter.Controllers
         
 
         private int IDMedico;
-        public SecurityController()
-        {
-            
-        }
         public int getIdMedico()
         {
             return IDMedico;
@@ -48,7 +44,7 @@ namespace FrontendDentalCenter.Controllers
               var auth = await UserServices.Login(userLogin);
               IDMedico = auth.IdMedico;
 
-            if (auth == null)
+            if (auth == null || auth.IdMedico == 0)
                   return RedirectToAction("Login");
             else
             {

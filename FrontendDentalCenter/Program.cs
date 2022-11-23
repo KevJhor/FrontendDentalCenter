@@ -2,6 +2,7 @@ using FrontendDentalCenter.Areas.Medico.Controllers;
 using FrontendDentalCenter.Controllers;
 using FrontendDentalCenter.Helpers;
 using FrontendDentalCenter.Providers;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<PathProvider>();
 builder.Services.AddSingleton<HelperUploadFiles>();
-builder.Services.AddSingleton<MedicoController>();
+//builder.Services.AddSingleton<MedicoController>();
 builder.Services.AddSingleton<SecurityController>();
-//builder.Services.AddTransient
+//builder.Services.AddTransient < SecurityController;Controller > ();
 
 var app = builder.Build();
 
