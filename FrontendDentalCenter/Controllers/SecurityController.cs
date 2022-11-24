@@ -42,13 +42,23 @@ namespace FrontendDentalCenter.Controllers
                   Contraseña = clave
               };
               var auth = await UserServices.Login(userLogin);
-              IDMedico = auth.IdMedico;
-
-            if (auth == null || auth.IdMedico == 0)
+              
+            if (auth == null || auth.Tipo==null)
                   return RedirectToAction("Login");
             else
             {
-                return RedirectToAction("Index", "Medico", new { Area = "Medico" });
+                if (auth.Tipo == "Medico")
+                {
+                    return RedirectToAction("Index", "Medico", new { Area = "Medico" });
+                }
+                else if (auth.Tipo == "Paciente")
+                {
+                    return RedirectToAction("Home", "Paciente");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
             }
 
 
