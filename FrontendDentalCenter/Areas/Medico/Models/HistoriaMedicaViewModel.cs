@@ -10,4 +10,12 @@
         public int? IdRecetaMedica { get; set; }
         public int? IdTratamiento { get; set; }
     }
+
+    public class CabHistoriaMedicaViewModel
+    {
+        public int IdHistoriaMedica { get; set; }
+        public int? IdPaciente { get; set; }
+        public DateTime? FechaDeActualizacion { get; set; }
+    }
+
 }

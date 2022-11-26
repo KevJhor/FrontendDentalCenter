@@ -16,5 +16,6 @@ namespace FrontendDentalCenter.Services
             var historiaMed = JsonConvert.DeserializeObject<IEnumerable<HistoriaMedicaViewModel>>(apiResponse);
             return historiaMed;
         }
+
     }
 }

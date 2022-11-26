@@ -1,5 +1,8 @@
-﻿using FrontendDentalCenter.Helpers;
+﻿using FrontendDentalCenter.Areas.Medico.Models;
+using FrontendDentalCenter.Helpers;
+using FrontendDentalCenter.Models;
 using FrontendDentalCenter.Providers;
+using FrontendDentalCenter.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FrontendDentalCenter.Areas.Medico.Controllers
@@ -44,6 +47,21 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             
             return RedirectToAction("Radioterapia");
 
+        }
+        public async Task<IActionResult> ListaHistoriaMedicaByPaciente(int id)
+        {
+            var Historia = await MedicoService.GetHistoriaMedicaByIdPaciente(1);
+            List<CabHistoriaMedicaViewModel> cabHistoria = new List<CabHistoriaMedicaViewModel>();
+            List<MedicoViewModel> medicos = new List<MedicoViewModel>();
+            foreach(var item in Historia)
+            {
+                cabHistoria.AddRange(await MedicoService.GetCabHistoriaMedicabyId(item.IdHistoriaMedica));
+                medicos.Add(await MedicoService.GetMedicosbyId(item.IdMedico));
+            }
+            ViewBag.HistoriaList = Historia;
+            ViewBag.CabHistoriaList = cabHistoria;
+            ViewBag.MedicoList = medicos;
+            return View();
         }
 
     }
