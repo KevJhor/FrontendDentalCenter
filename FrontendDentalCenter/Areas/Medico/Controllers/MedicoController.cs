@@ -4,6 +4,7 @@ using FrontendDentalCenter.Models;
 using FrontendDentalCenter.Providers;
 using FrontendDentalCenter.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.JSInterop;
 
 namespace FrontendDentalCenter.Areas.Medico.Controllers
 {
@@ -29,10 +30,29 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             return View();
         }
 
-        public IActionResult Tratamiento()
+        /*public IActionResult Tratamiento()
         {
+            var Tratamientos = TratamientoService.GetTratamientos();
+            ViewBag.TratamientoList = Tratamientos;
+            return View();
+        }*/
+
+        public async Task<IActionResult> Tratamiento()
+        {
+            var Tratamientos = await TratamientoService.GetTratamientos();
+            ViewBag.TratamientoList = Tratamientos;
             return View();
         }
+        
+        public IActionResult CancelarTratamiento()
+        {
+
+            return RedirectToAction("RegistrarHistoria", "HistoriaMedica", new { Area = "Medico" });
+
+
+        }
+
+
 
         public async Task<IActionResult> RadioterapiaF(IFormFile imagen, int ubicacion)
         {
@@ -63,6 +83,8 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             ViewBag.MedicoList = medicos;
             return View();
         }
+
+        
 
     }
 }

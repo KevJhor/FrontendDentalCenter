@@ -9,7 +9,7 @@ namespace FrontendDentalCenter.Services
     {
         public static async Task<IEnumerable<TratamientoViewModel>> GetTratamientos()
         {
-            var url = "http://localhost:5010/api/Tratamiento";//\r\n";
+            var url = "http://localhost:5010/api/Tratamiento";
             using var htppClient = new HttpClient();
             using var response = await htppClient.GetAsync(url);
             var apiResponse = await response.Content.ReadAsStringAsync();

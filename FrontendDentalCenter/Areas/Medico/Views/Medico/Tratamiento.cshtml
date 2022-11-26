@@ -2,6 +2,12 @@
     Layout = null;
 }
 
+@using FrontendDentalCenter.Areas.Administracion.Models
+@{
+    var tratamiento = ViewBag.TratamientoList as List<TratamientoViewModel>;
+    
+    
+}
 <html>
 <head>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -22,47 +28,79 @@
             <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
             <select class="form-select" id="inlineFormSelectPref">
                 <option selected></option>
-                <option value="1">Tratamiento1</option>
-                <option value="2">Tratamiento2</option>
-                <option value="3">Tratamiento3</option>
+                @foreach(var item in tratamiento){
+                    <option value="@item.IdTratamiento">@item.Descripcion</option>
+                }
+
+                
             </select>
         </div>
         <div class="col-auto">
-            <button type="button" class="btn btn-primary">Crear Tratamiento</button>
+            <button type="button" class="btn btn-primary" onclick="myFunction()">Crear nuevo tratamiento</button>
         </div>
 
     </form>
-    <form class="row g-2">
-        <div class="col-auto">
-            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Tipo</label>
-        </div>
-        <div class="col-sm-2">
-            <input type="text" class="form-control" id="Tipo" placeholder="">
-        </div>
-        <div class="col-auto">
-            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Duración</label>
-        </div>
-        <div class="col-sm-2">
-            <input type="text" class="form-control" id="Duracion" placeholder="">
-        </div>
-        <div class="col-auto">
-            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">días</label>
-        </div>
-    </form>
-    <form class="row g-2">
-        <div class="col-auto">
-            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Precio</label>
-        </div>
-        <div class="col-sm-1">
-            <input type="text" class="form-control" id="Precio" placeholder="">
-        </div>
-        <div class="col-auto">
-            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Nombre</label>
-        </div>
-        <div class="col-sm-3">
-            <input type="text" class="form-control" id="Nombre" placeholder="">
-        </div>
-    </form>
+    
+    
+   <div class="col-auto" id="idDatos" style="display: none">
+            <form class="row g-2">
+                <div class="col-auto">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Tipo</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="Tipo" placeholder="">
+                </div>
+                <div class="col-auto">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Duración</label>
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" id="Duracion" placeholder="">
+                </div>
+                <div class="col-auto">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label ">días</label>
+                </div>
+            </form>
+            <form class="row g-2">
+                <div class="col-auto">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Precio</label>
+                </div>
+                <div class="col-sm-1">
+                    <input type="text" class="form-control" id="Precio" placeholder="">
+                </div>
+                <div class="col-auto">
+                    <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Nombre</label>
+                </div>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="Nombre" placeholder="">
+                </div>
+            </form>
 
+   </div>
+
+    <div class="col-auto">
+        <form>
+            <button type="button" class="btn btn-primary">Seleccionar tratamiento</button>
+        </form>
+        
+        <form action="@Url.Action("CancelarTratamiento","Medico")">
+            <button type="submit" class="btn btn-primary">Cancelar</button>
+        </form>
+        
+    </div>
 </body>
 </html>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("idDatos");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    
+
+</script>
+
