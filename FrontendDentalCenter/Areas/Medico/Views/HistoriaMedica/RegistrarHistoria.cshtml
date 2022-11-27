@@ -69,24 +69,38 @@
                                 <thead>
                                     <tr>
                                         <th>Codigo</th>
-                                        <th>Medicamento</th>
-                                        <th>Cantidad</th>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Precio</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>00153</td>
-                                        <td>Panadol</td>
-                                        <td>2</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
                                     </tr>
                                     <tr>
-                                        <td>00881</td>
-                                        <td>Paracetamol</td>
-                                        <td>3</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                        <td>-</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+
+                        <div class="b">
+                            <button class="boton4">Agregar Medicamneto</button>
+                        </div>
+                        <label class="ComBXM">
+
+                            <select name="" id="lang">
+                                <option value="Medicamento1">Medicamento1</option>
+                                <option value="Medicamento2">Medicamento2</option>
+                                <option value="Medicamento3">Medicamento3</option>
+                                <option value="Medicamento4">Medicamento4</option>
+                            </select>
+                        </label>
                         <label class="observaciones">
                             <span>Observaciones</span>
                             <textarea name="Observaciones" rows="10" class="observaciones"></textarea>
@@ -173,6 +187,12 @@
         text-align: center;
     }
 
+    form .b {
+        grid-row: 3 / span 2;
+        grid-column: 3 / span 15;
+        text-align: center;
+    }
+
     form .observaciones {
         grid-row: 4 / span 1;
         grid-column: 1 / span 2;
@@ -202,7 +222,7 @@
         margin: auto;
     }
 
-    .boton1, .boton2, .boton3 {
+    .boton1, .boton2, .boton3, .boton4 {
         padding: 10px;
         border: none;
         font-size: 17px;
@@ -223,4 +243,21 @@
         padding: 10px;
         background-color: #FFC733;
     }
+
+    .boton4 {
+        padding: 10px;
+        background-color: #0a0;
+    }
+
+    form .ComBXM {
+        grid-row: 3 / span 1;
+        grid-column: 1 / span 5;
+        margin: auto;
+    }
+
+    .ComBXM {
+        padding: 10px;
+        background-color: #fff;
+    }
+
 </style>
