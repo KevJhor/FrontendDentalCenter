@@ -1,7 +1,6 @@
-﻿using FrontendDentalCenter.ViewModels;
+﻿using FrontendDentalCenter.Areas.Administracion.Models;
 using FrontendDentalCenter.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace FrontendDentalCenter.Areas.Administracion.Controllers
 {
@@ -21,7 +20,7 @@ namespace FrontendDentalCenter.Areas.Administracion.Controllers
 
         public async Task<IActionResult> Obtener(int id)
         {
-            var tratamiento = await TratamientoService.GetTratamientoById(id);
+            var tratamiento = await TratamientoService.GetTratamientosById(id);
             return Json(tratamiento);
         }
         public async Task<IActionResult> Guardar(int idTratamiento, string tipo,
