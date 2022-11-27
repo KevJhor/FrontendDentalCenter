@@ -1,5 +1,4 @@
-﻿using FrontendDentalCenter.Areas.Administracion.Models;
-using FrontendDentalCenter.Models;
+﻿using FrontendDentalCenter.ViewModels;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -16,13 +15,16 @@ namespace FrontendDentalCenter.Services
             var tratamientos = JsonConvert.DeserializeObject<IEnumerable<TratamientoViewModel>>(apiResponse);
             return tratamientos;
         }
-        public static async Task<TratamientoViewModel> GetTratamientosById(int id)
+        public static async Task<TratamientoViewModel>GetTratamientoById(int id)
         {
-            var url = "http://localhost:5010/api/Tratamiento/" + id;//\r\n";
+            var url = "http://localhost:5010/api/Tratamiento/" + id;
             using var htppClient = new HttpClient();
             using var response = await htppClient.GetAsync(url);
             var apiResponse = await response.Content.ReadAsStringAsync();
-            var tratamiento = JsonConvert.DeserializeObject<TratamientoViewModel>(apiResponse);
+            apiResponse = apiResponse.Remove(0,1);
+            apiResponse = apiResponse.Remove(apiResponse.Length-1,1);
+            string another = apiResponse;
+            var tratamiento = JsonConvert.DeserializeObject<TratamientoViewModel>(another);
             return tratamiento;
         }
         public static async Task<bool> InsertTratamiento(TratamientoViewModelPost tratamiento)

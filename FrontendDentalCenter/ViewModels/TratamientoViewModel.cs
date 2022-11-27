@@ -1,4 +1,4 @@
-﻿namespace FrontendDentalCenter.Areas.Administracion.Models
+﻿namespace FrontendDentalCenter.ViewModels
 {
     public class TratamientoViewModel
     {
