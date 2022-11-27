@@ -1,4 +1,6 @@
-﻿using FrontendDentalCenter.Models;
+﻿using FrontendDentalCenter.Areas.Medico.Controllers;
+using FrontendDentalCenter.Helpers;
+using FrontendDentalCenter.Models;
 using FrontendDentalCenter.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +15,10 @@ namespace FrontendDentalCenter.Controllers
         public int getIdMedico()
         {
             return IDMedico;
+        }
+        public void setIdMedico(int id)
+        {
+            IDMedico = id;
         }
         public IActionResult Login()
         {
@@ -36,19 +42,23 @@ namespace FrontendDentalCenter.Controllers
 
         public async Task<IActionResult> Signin(string correo, string clave)
         {
+           
               var userLogin = new LoginData() 
               {
                   Usuario = correo,
                   Contraseña = clave
               };
               var auth = await UserServices.Login(userLogin);
-              
+              setIdMedico(auth.IdMedico);
+            
+           // MedicoController medicoController = new MedicoController(HelperUploadFiles,auth.IdMedico);
             if (auth == null || auth.Tipo==null)
                   return RedirectToAction("Login");
             else
             {
                 if (auth.Tipo == "Medico")
                 {
+                    
                     return RedirectToAction("Index", "Medico", new { Area = "Medico" });
                 }
                 else if (auth.Tipo == "Paciente")

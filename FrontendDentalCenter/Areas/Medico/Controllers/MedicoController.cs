@@ -11,11 +11,14 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
     [Area("Medico")]
     public class MedicoController : Controller
     {
-        private HelperUploadFiles helperUpload;
-        public MedicoController(HelperUploadFiles helperUpload)
+       
+        private int idMedico;
+        /*public MedicoController(int id)
         {
-            this.helperUpload = helperUpload;
-        }
+            idMedico = id;
+            
+        }*/
+        
         
         public IActionResult Index()
         {
@@ -25,10 +28,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
         {
             return View();
         }
-        public IActionResult Radioterapia()
-        {
-            return View();
-        }
+       
 
         /*public IActionResult Tratamiento()
         {
@@ -51,23 +51,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
 
 
         }
-
-
-
-        public async Task<IActionResult> RadioterapiaF(IFormFile imagen, int ubicacion)
-        {
-            string nombreImagen = imagen.FileName;
-
-            string path = "";
-
-            path = await this.helperUpload.UploadFilesAsync(imagen, nombreImagen, Folders.Images);
-
-
-            ViewBag.Mensaje = "Elemento ingresado satisfactoriamente";
-            
-            return RedirectToAction("Radioterapia");
-
-        }
+       
         public async Task<IActionResult> ListaHistoriaMedicaByPaciente(int id)
         {
             var Historia = await MedicoService.GetHistoriaMedicaByIdPaciente(1);
