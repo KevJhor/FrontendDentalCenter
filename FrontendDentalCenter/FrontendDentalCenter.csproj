@@ -14,7 +14,6 @@
     <Folder Include="Areas\Administracion\Data\" />
     <Folder Include="Areas\Medico\Data\" />
     <Folder Include="Areas\Paciente\Data\" />
-    <Folder Include="Areas\Paciente\Models\" />
   </ItemGroup>
 
 </Project>

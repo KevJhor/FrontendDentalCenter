@@ -1,4 +1,10 @@
-﻿<div class="alert alert-primary">
+﻿@using FrontendDentalCenter.Areas.Paciente.Models
+
+@{
+    var especialidad = ViewBag.EspecialidadList as IEnumerable<EspecialidadViewModel>;
+}
+
+<div class="alert alert-primary">
     <div class="row">
         <div class="col-md-4">
             <h3>Crear Cita</h3>
@@ -28,10 +34,20 @@
                         </div>
                         <div class="form-floating">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option selected></option>
-                                <option value="1">Ortodoncista</option>
+
+                                @foreach (var item in especialidad)
+                                {
+                                <option>@item.Descripcion</option>
+                                }
+
+                               @* <option value="1">Ortodoncista</option>
                                 <option value="2">Endodoncista</option>
-                                <option value="3">Cirugía Oral</option>
+                                <option value="3">Odontopediatría</option>
+                                <option value="4">Periodoncia</option>
+                                <option value="5">Patología bucal</option>
+                                <option value="6">Cirugía Oral</option>
+                                <option value="7">Odontogía estética</option>
+                                <option value="8">Odontología general</option>*@
                             </select>
                             <label for="floatingSelect">Seleccione</label>
                         </div>
