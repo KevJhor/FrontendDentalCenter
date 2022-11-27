@@ -90,7 +90,7 @@
                         </div>
 
                         <div class="b">
-                            <button class="boton4">Agregar Medicamneto</button>
+                            <button class="boton4">Agregar Medicameto</button>
                         </div>
                         <label class="ComBXM">
 
@@ -106,18 +106,158 @@
                             <textarea name="Observaciones" rows="10" class="observaciones"></textarea>
                         </label>
                     </fieldset>
-                    <div class="botones">
-                        <button class="boton1">Cancelar</button>
-                        <button class="boton2">Guardar</button>
-                        <button class="boton3">Adicionar</button>
-                    </div>
+
+                    
                 </form>
+                
 
-
+                <fieldset class="dato-cliente">
+                    <div class="botones">
+                    <button class="boton1">Cancelar</button>
+                    <button class="boton2">Guardar</button>
+                    <button id="btnAgregarTratamiento" class="boton3">Agregar</button>
+                </div>
+                </fieldset>
+                
 
     </main>
 </body>
 
+
+@using FrontendDentalCenter.ViewModels;
+@{
+    var tratamiento = ViewBag.TratamientoList as List<TratamientoViewModel>;
+
+
+}
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalRegistroTratamiento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mantenimiento de Tratamientos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <form class="row align-text-top g-1">
+                        <div class="col-auto">
+                            <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Tratamiento</label>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                            <select class="form-select" id="inlineFormSelectPref">
+                                <option selected></option>
+                                @foreach (var item in tratamiento)
+                                {
+                                    <option value="@item.IdTratamiento">@item.Descripcion</option>
+                                }
+
+
+                            </select>
+                        </div>
+                        
+
+                    </form>
+
+
+                    <div class="col-auto" id="idDatos" style="display: none">
+                        <form class="row g-2">
+                            <div class="col-auto">
+                                <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Tipo</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="Tipo" placeholder="">
+                            </div>
+                            <div class="col-auto">
+                                <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Duración</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="Duracion" placeholder="">
+                            </div>
+                            <div class="col-auto">
+                                <label for="colFormLabelSm" class="col-sm-2 col-form-label ">días</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" id="Dias" placeholder="">
+                            </div>
+                        </form>
+                        <form class="row g-2">
+                            <div class="col-auto">
+                                <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Precio</label>
+                            </div>
+                            <div class="col-sm-1">
+                                <input type="text" class="form-control" id="Precio" placeholder="">
+                            </div>
+                            <div class="col-auto">
+                                <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Nombre</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" id="Nombre" placeholder="">
+                            </div>
+                        </form>
+
+                    </div>
+
+                    
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+
+                    <form>
+                    <button type="button" class="btnM" onclick="myFunction()">Crear</button>
+                    
+                </form>
+
+                <form>
+                    <button type="button" class="btnM">Seleccionar</button>
+                </form>
+
+                <form>
+                        <button type="button" class="btnM" data-bs-dismiss="modal">Cancelar</button>
+                </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("idDatos");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    $("#btnAgregarTratamiento").click(function () {
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroTratamiento'))
+        $("#Tipo").val("");
+        $("#Duracion").val("");
+        $("#Precio").val("");
+        $("#Nombre").val("");
+        $("#Dias").val("");
+        myModal.show();
+    });
+
+
+
+</script>
 
 
 <style>
@@ -259,5 +399,27 @@
         padding: 10px;
         background-color: #fff;
     }
+
+    .btn-group .btnM {
+  background-color: #4CAF50; /* Green */
+  border: 1px solid green;
+  color: white;
+  padding: 10px 45px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  float: left;
+}
+
+.btn-group .btnM:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+.btn-group .btnM:hover {
+  background-color: #3e8e41;
+}
+
 
 </style>

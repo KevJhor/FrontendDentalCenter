@@ -24,8 +24,10 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             return View();
         }
 
-        public IActionResult RegistrarHistoria()
+        public async Task<IActionResult> RegistrarHistoriaAsync()
         {
+            var Tratamientos = await TratamientoService.GetTratamientos();
+            ViewBag.TratamientoList = Tratamientos;
             return View();
         }
 
