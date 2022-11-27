@@ -21,7 +21,7 @@
             </div>
             <div class="modal-body">
                 <div class="container-fluid">
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -59,58 +59,55 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" id="btnGuardarTratamiento">Guardar Cambios</button>
-                <input type="hidden" value="-1" id="hidIdTratamiento"/>
+                <input type="hidden" value="-1" id="hidIdTratamiento" />
             </div>
         </div>
     </div>
 </div>
 
 <div id="divListadoTratamientos">
-
 </div>
 
 <script>
-    $("#divListadoTratamientos").on('click', 'btnEditarTratamiento',function(){
+    $("#divListadoTratamientos").on('click', '.btnEditarTratamiento', function () {
         let vIdTratamiento = $(this).attr('data-id');
         $("#hidIdTratamiento").val(vIdTratamiento);
-        var myModal = new bootstrap.Modal(document.getElementBuId('modalRegistroTratamiento)'));
-
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroTratamiento'));
         $.ajax({
             type: "GET",
             url: '@Url.Action("Obtener", "Tratamiento", new {Area="Administracion"})',
             Cache: false,
-            data: {id:vIdTratamiento},
-            success: function (objTratamiento){
-                $("txtTipo").val(objTratamiento.tipo);
-                $("txtDuracion").val(objTratamiento.duracion);
-                $("txtPrecio").val(objTratamiento.precio);
-                $("txtDescripcion").val(objTratamiento.descripcion);
+            data: { id: vIdTratamiento },
+            success: function (objTratamiento) {
+                console.log("El valor de objTratamiento es: " + JSON.stringify(objTratamiento))
+                $("#txtTipo").val(objTratamiento.tipo);
+                $("#txtDuracion").val(objTratamiento.duracionDias);
+                $("#txtPrecio").val(objTratamiento.precio);
+                $("#txtDescripcion").val(objTratamiento.descripcion);
                 myModal.show();
             }
         });
 
     })
-    $("#divListadoTratamientos").on('click', 'btnEliminarTratamiento', function () {
+    $("#divListadoTratamientos").on('click', '.btnEliminarTratamiento', function () {
         let vIdTratamiento = $(this).attr('data-id');
-        if(confirm("¿Está seguro de eliminar el Tratamiento?")==true)
-        {
+        if (confirm("¿Está seguro de eliminar el Tratamiento?")) {
             $.ajax({
-                type:"DELETE",
+                type: "DELETE",
                 url: "@Url.Action("Eliminar", "Tratamiento", new {Area = "Administracion"})",
-                data: {id: vIdTratamiento},
+                data: { id: vIdTratamiento },
                 cache: false,
-                success: function(exito){
-                    if(exito)
-                    {   
+                success: function (exito) {
+                    if (exito) {
                         alert("Se eliminó correctamente");
                         CargarListadoTratamiento();
-                    }else{
+                    } else {
                         alert("No se puede eliminar el tratamiento ya que cuenta con dependientes");
                     }
                 }
             });
         }
-        
+
     });
 
     $("#btnGuardarTratamiento").click(function () {
@@ -123,7 +120,7 @@
         $.ajax({
             type: "POST",
             url: '@Url.Action("Guardar","Tratamiento", new{Area="Administracion"})',
-            Cache:false,
+            Cache: false,
             data: {
                 idTratamiento: vIdTratamiento,
                 tipo: vTipo,
@@ -131,31 +128,35 @@
                 precio: vPrecio,
                 descripcion: vDescripcion
             },
-            success: function(valorRespuesta){
-                if(valorRespuesta){
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
                     alert("Se registró correctamente!");
                     CargarListadoTratamiento();
                     myModal.hide();
-                }else{
+                } else {
                     alert("Ocurrió un error al registrar el Tratamiento!");
                 }
             }
         });
-        
+
     });
 
-    $("#btnAgregarTratamiento").click(function()
-    {
+    $("#btnAgregarTratamiento").click(function () {
         var myModal = new bootstrap.Modal(document.getElementById('modalRegistroTratamiento'))
+        $("#hidIdTratamiento").val("");
+        $("#txtTipo").val("");
+        $("#txtDuracion").val("");
+        $("#txtPrecio").val("");
+        $("#txtDescripcion").val("");
         myModal.show();
     });
     CargarListadoTratamiento();
-    function CargarListadoTratamiento(){
+    function CargarListadoTratamiento() {
         $.ajax({
             type: "GET",
             url: '@Url.Action("Listado", "Tratamiento", new {Area = "Administracion"})',
             cache: false,
-            success: function (dataHTML){
+            success: function (dataHTML) {
                 $("#divListadoTratamientos").html(dataHTML);
             }
         });
