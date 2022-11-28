@@ -23,18 +23,177 @@
                 <td>@item.Nombre</td>
                 <td>@item.Apellido</td>
                 <td>@item.Dni</td>
-
+                <td>
+                    <button id="btnVerHistorial" class="btn btn-primary">Ver Historial</button>
+                    <a href="http://localhost:5181/Medico/HistoriaMedica/RegistrarHistoria" class="btn btn-success">Registrar Historial</a>
+                </td>
             </tr>
+        }
     </tbody>
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="modalVerHistorial" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registro de Historial</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <form class="formulario">
+                            <fieldset class="dato-cliente">
+                                <legend>DATOS DEL CLIENTE</legend>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>
+                                            <span>Nombre:</span>
+                                            <input type="text" readonly name="nombre">
+                                        </label>
+                                    </div>
+                                </div>
+                                @*<label>
+                                    <span>NOMBRE:</span>
+                                    <input type="text" readonly name="nombre">
+                                </label>*@
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label for="">
+                                    <span>Apellido:</span>
+                                    <input type="text" readonly name="apellido">
+                                </label>
+                                    </div>
+                                </div>
+                                @*<label for="">
+                                    <span>Email:</span>
+                                    <input type="email" readonly name="email">
+                                </label>*@
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label for="">
+                                            <span>Email:</span>
+                                            <input type="email" readonly name="email">
+                                        </label>
+                                    </div>
+                                </div>
+
+                                @*<label for="">
+                                    <span>Apellido:</span>
+                                    <input type="text" readonly name="apellido">
+                                </label>*@
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label for="">
+                                            <span>Telefono:</span>
+                                            <input type="text" readonly name="telefono">
+                                        </label>
+                                    </div>
+                                </div>
+                                @*<label for="">
+                                    <span>Telefono:</span>
+                                    <input type="text" readonly name="telefono">
+                                </label>*@
+
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label for="">
+                                            <span>DNI:</span>
+                                            <input type="text" readonly name="dni">
+                                        </label>
+                                    </div>
+                                </div>
+
+                                @*<label for="">
+                                    <span>DNI:</span>
+                                    <input type="text" readonly name="dni">
+                                </label>*@
+                            </fieldset>
+
+                            <fieldset class="dato-fecha">
+                                <legend>FECHA</legend>
+                                <label>
+                                    <span>Fecha:</span>
+                                    <input type="date" name="fecha">
+                                </label>
+                                <label>
+                                    <span>Hora:</span>
+                                    <input type="time" name="hora">
+                                </label>
+                            </fieldset>
+
+                            <fieldset class="dato-receta">
+                                <legend>RECETA</legend>
+                                <label>
+                                    <span>Nombre:</span>
+                                    <input type="text" name="nombre" readonly>
+                                </label>
+                                <label>
+                                    <span>RUC:</span>
+                                    <input type="text" name="ruc" readonly>
+                                </label>
+                                <label>
+                                    <span>Especialidad:</span>
+                                    <input type="text" name="especialidad" readonly>
+                                </label>
+                                <div>
+                                    <legend>MEDICAMENTOS</legend>
+                                </div>
+                                <div class="table">
+                                    <table border>
+                                        <thead>
+                                            <tr>
+                                                <th>Codigo</th>
+                                                <th>Nombre</th>
+                                                <th>Tipo</th>
+                                                <th>Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                            </tr>
+                                            <tr>
+                                                <td>-</td>
+                                                <td>-</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <legend> OBSERVACIONES </legend>
+                                <div>
+                                    <textarea class="form-control" placeholder="" id="floatingTextarea2" style="height: 100px"></textarea>
+                                    <label for="floatingTextarea2">Observaciones</label>
+                                    @*<textarea name="Observaciones" style="height: 100px" class="observaciones"></textarea>*@
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <style>
     body {
         font-family: arial narrow;
     }
+
 </style>
 
 <script>
+
+    $("#btnVerHistorial").click(function () {
+        var myModal = new bootstrap.Modal(document.getElementById('modalVerHistorial'));
+        myModal.show();
+    });
+
     loadDatatable();
     function loadDatatable() {
         //$("#tbListadoCliente").DataTable();
@@ -47,5 +206,7 @@
         table.buttons().container()
             .insertBefore("#tbListadoHistoriaMedica_filter");
     }
+
+    
 
 </script>
