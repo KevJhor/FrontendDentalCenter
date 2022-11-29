@@ -28,7 +28,7 @@
                 <td>@medicos[i].Apellido</td>
                 <td>@cabHistoia[i].FechaDeActualizacion</td>
                 <td>
-                    <button id="btnVerHistorial" class="btn btn-primary">Ver Historial</button>
+                    <button class="btn btn-primary" onclick="loadModal()">Ver Historial</button>
                 </td>
             </tr>
         }
@@ -50,72 +50,31 @@
                         <form class="formulario">
                             <fieldset class="dato-cliente">
                                 <legend>DATOS DEL CLIENTE</legend>
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label>
-                                            <span>Nombre:</span>
-                                            <input type="text" readonly name="nombre">
-                                        </label>
-                                    </div>
-                                </div>
-                                @*<label>
-                                <span>NOMBRE:</span>
-                                <input type="text" readonly name="nombre">
-                                </label>*@
-                                <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label for="">
-                                            <span>Apellido:</span>
-                                            <input type="text" readonly name="apellido">
-                                        </label>
-                                    </div>
-                                </div>
-                                @*<label for="">
-                                <span>Email:</span>
-                                <input type="email" readonly name="email">
-                                </label>*@
-                                <div class="col-md-10">
-                                    <div class="form-group">
-                                        <label for="">
-                                            <span>Email:</span>
-                                            <input type="email" readonly name="email">
-                                        </label>
-                                    </div>
-                                </div>
+                                <label>
+                                    <span>NOMBRE:</span>
+                                    <input type="text" readonly name="nombre">
+                                </label>
+                                <label for="">
+                                    <span>Email:</span>
+                                    <input type="email" readonly name="email">
+                                </label>
 
-                                @*<label for="">
-                                <span>Apellido:</span>
-                                <input type="text" readonly name="apellido">
-                                </label>*@
-                                <div class="col-md-10">
-                                    <div class="form-group">
-                                        <label for="">
-                                            <span>Telefono:</span>
-                                            <input type="text" readonly name="telefono">
-                                        </label>
-                                    </div>
-                                </div>
-                                @*<label for="">
-                                <span>Telefono:</span>
-                                <input type="text" readonly name="telefono">
-                                </label>*@
+                                <label for="">
+                                    <span>Apellido:</span>
+                                    <input type="text" readonly name="apellido">
+                                </label>
 
-                                <div class="col-md-10">
-                                    <div class="form-group">
-                                        <label for="">
-                                            <span>DNI:</span>
-                                            <input type="text" readonly name="dni">
-                                        </label>
-                                    </div>
-                                </div>
+                                <label for="">
+                                    <span>Telefono:</span>
+                                    <input type="text" readonly name="telefono">
+                                </label>
 
-                                @*<label for="">
-                                <span>DNI:</span>
-                                <input type="text" readonly name="dni">
-                                </label>*@
-                            </fieldset>
+                                <label for="">
+                                    <span>DNI:</span>
+                                    <input type="text" readonly name="dni">
+                                </label>
 
-                            <fieldset class="dato-fecha">
+                               <div class="dato-fechas">
                                 <legend>FECHA</legend>
                                 <label>
                                     <span>Fecha:</span>
@@ -125,7 +84,10 @@
                                     <span>Hora:</span>
                                     <input type="time" name="hora">
                                 </label>
+                              </div>
                             </fieldset>
+
+                           
 
                             <fieldset class="dato-receta">
                                 <legend>RECETA</legend>
@@ -134,16 +96,13 @@
                                     <input type="text" name="nombre" readonly>
                                 </label>
                                 <label>
+                                    <span>Apellido:</span>
+                                    <input type="text" name="Apellido" readonly>
+                                </label>
+                                <label>
                                     <span>RUC:</span>
                                     <input type="text" name="ruc" readonly>
                                 </label>
-                                <label>
-                                    <span>Especialidad:</span>
-                                    <input type="text" name="especialidad" readonly>
-                                </label>
-                                <div>
-                                    <legend>MEDICAMENTOS</legend>
-                                </div>
                                 <div class="table">
                                     <table border>
                                         <thead>
@@ -163,18 +122,24 @@
                                             <tr>
                                                 <td>-</td>
                                                 <td>-</td>
+                                                <td>-</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <legend> OBSERVACIONES </legend>
-                                <div>
-                                    <textarea class="form-control" placeholder="" id="floatingTextarea2" style="height: 100px"></textarea>
-                                    <label for="floatingTextarea2">Observaciones</label>
-                                    @*<textarea name="Observaciones" style="height: 100px" class="observaciones"></textarea>*@
-                                </div>
+
+                                <label class="observaciones">
+                                    <span class="labelO">Observaciones</span>
+                                    <textarea name="Observaciones" rows="10" class="observaciones"></textarea>
+                                </label>
                             </fieldset>
+
+
                         </form>
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -182,9 +147,164 @@
     </div>
 </div>
 
+
 <style>
+
+    form {
+        display: grid;
+        grid-template-rows: auto;
+        grid-template-columns: repeat(2,1fr);
+        grid-auto-rows: auto;
+        grid-gap: 14px;
+    }
+
     body {
         font-family: arial narrow;
+    }
+
+    legend {
+        font-size: 17px;
+        font-weight: 900;
+    }
+
+    form .dato-cliente {
+        grid-row: 1 / span 1;
+    }
+
+    form .dato-fecha {
+        grid-row: 2 / span 1;
+        grid-column: 1 / span 1;
+    }
+    
+    
+
+    form fieldset label {
+        display: block;
+        font-size: 17px;
+        font-weight: 600;
+        margin: 8px 0;
+    }
+
+        form fieldset label input {
+            outline: none;
+            padding: 5px;
+        }
+
+        form fieldset label span {
+            width: 95px;
+            display: inline-block;
+        }
+
+    form fieldset textarea {
+        display: block;
+    }
+
+    form .dato-receta {
+        grid-row: 1 / span 1;
+    }
+
+    form .botones {
+        grid-row: 3 / span 1;
+        grid-column: 1 / span 2;
+        text-align: center;
+    }
+
+    form .b {
+        grid-row: 3 / span 2;
+        grid-column: 3 / span 15;
+        text-align: center;
+    }
+
+    form .observaciones {
+        grid-row: 4 / span 1;
+        grid-column: 1 / span 2;
+        text-align: center;
+    }
+
+        form .observaciones textarea {
+            /* width: 200px !important; */
+            width: 100%;
+            resize: none;
+        }
+
+    form table {
+        font-size: 18px;
+        width: 200px;
+    }
+
+    form .table table thead tr th {
+        width: 100px !important;
+    }
+
+    form .table {
+        grid-row: 3 / span 1;
+        grid-column: 1 / span 2;
+        width: 100%;
+        /* border: 2px solid red; */
+        margin: auto;
+    }
+
+    .boton1, .boton2, .boton3, .boton4 {
+        padding: 10px;
+        border: none;
+        font-size: 17px;
+        color: #fff;
+    }
+
+    .boton1 {
+        background-color: #a00;
+        color: #fff;
+    }
+
+    .boton2 {
+        padding: 10px;
+        background-color: #0a0;
+    }
+
+    .boton3 {
+        padding: 10px;
+        background-color: #FFC733;
+    }
+
+    .boton4 {
+        padding: 10px;
+        background-color: #0a0;
+    }
+
+    form .ComBXM {
+        grid-row: 3 / span 1;
+        grid-column: 1 / span 5;
+        margin: auto;
+    }
+
+    .ComBXM {
+        padding: 10px;
+        background-color: #fff;
+    }
+
+    .btn-group .btnM {
+        background-color: #4CAF50; /* Green */
+        border: 1px solid green;
+        color: white;
+        padding: 10px 45px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        cursor: pointer;
+        float: left;
+    }
+
+        .btn-group .btnM:not(:last-child) {
+            border-right: none; /* Prevent double borders */
+        }
+
+        .btn-group .btnM:hover {
+            background-color: #3e8e41;
+        }
+
+    .labelO {
+        float: left
     }
 
 </style>
@@ -192,10 +312,10 @@
 
 <script>
 
-    $("#btnVerHistorial").click(function () {
+   /* $("#btnVerHistorial").click(function () {
         var myModal = new bootstrap.Modal(document.getElementById('modalVerHistorial'));
         myModal.show();
-    });
+    });*/
 
     loadDatatable();
     function loadDatatable() {
@@ -210,6 +330,9 @@
             .insertBefore("#tbListadoHistoriaMedica_filter");
     }
 
-
+    function loadModal(){
+        var myModal = new bootstrap.Modal(document.getElementById('modalVerHistorial'));
+        myModal.show();
+    }
 
 </script>
