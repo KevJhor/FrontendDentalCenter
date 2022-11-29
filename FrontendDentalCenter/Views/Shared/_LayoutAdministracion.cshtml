@@ -25,7 +25,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="Medico" asp-controller="Medico" asp-action="">FrontendDentalCenter</a>
+                <a class="navbar-brand" asp-area="Administracion" asp-controller="Home" asp-action="Index">DentalCenter</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,33 +33,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Medico" asp-controller="Medico" asp-action="Index">Index</a>
+                            <a class="nav-link text-dark" asp-area="Administracion" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Medico" asp-controller="HistoriaMedica" asp-action="ListaHistoriaMedica">Lista historia médica</a>
+                            <a class="nav-link text-dark" asp-area="Administracion" asp-controller="Paciente" asp-action="Listado">Lista de pacientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Medico" asp-controller="Odontograma" asp-action="Index">Odontograma</a>
+                            <a class="nav-link text-dark" asp-area="Administracion" asp-controller="Medico" asp-action="Listado">Lista de médicos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Medico" asp-controller="Radioterapia" asp-action="Radioterapia">Radiografia</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Medico" asp-controller="HistoriaMedica" asp-action="RegistrarHistoria">RegistrarHistoria</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Medico" asp-controller="Medico" asp-action="Tratamiento">Tratamiento</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Medico" asp-controller="Cita" asp-action="ListaCita">Pacientes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Medico" asp-controller="Medico" asp-action="ListaHistoriaMedicaByPaciente">VerHistoriasPacientes</a>
+                            <a class="nav-link text-dark" asp-area="Administracion" asp-controller="Tratamiento" asp-action="Index">Lista de tratamientos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Security" asp-action="Login">Cerrar Sesión</a>
                         </li>
-                        
                     </ul>
                 </div>
             </div>
@@ -73,12 +60,9 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2022 - FrontendDentalCenter - <a asp-area="Medico" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - FrontendDentalCenter - <a asp-area="Administracion" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -17,7 +17,7 @@ namespace FrontendDentalCenter.Areas.Paciente.Controllers
         {
             var pacientes = await PacienteService.GetPacientes();
             ViewBag.PacienteList = pacientes;
-            return View();
+            return PartialView();
         }
         public async Task<IActionResult> ListadoDeEspecialidades() 
         {

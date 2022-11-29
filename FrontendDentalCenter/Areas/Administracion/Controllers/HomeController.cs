@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace FrontendDentalCenter.Areas.Medico.Controllers
+namespace FrontendDentalCenter.Areas.Administracion.Controllers
 {
-    [Area("Medico")]
+    [Area("Administracion")]
     public class HomeController : Controller
     {
         public IActionResult Index()

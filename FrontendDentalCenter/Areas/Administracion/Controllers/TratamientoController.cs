@@ -12,6 +12,10 @@ namespace FrontendDentalCenter.Areas.Administracion.Controllers
         {
             return View();
         }
+        public IActionResult Indice()
+        {
+            return View();
+        }
         public async Task<IActionResult> Listado()
         {
             var tratamientos = await TratamientoService.GetTratamientos();

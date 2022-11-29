@@ -9,5 +9,9 @@ namespace FrontendDentalCenter.Areas.Paciente.Controllers
         {
             return View();
         }
+        public IActionResult Privacy()
+        {
+            return View();
+        }
     }
 }
