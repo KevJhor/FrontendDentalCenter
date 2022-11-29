@@ -1,6 +1,8 @@
 ﻿using FrontendDentalCenter.Services;
 using Microsoft.AspNetCore.Mvc;
 using FrontendDentalCenter.Controllers;
+using FrontendDentalCenter.Models;
+
 namespace FrontendDentalCenter.Areas.Medico.Controllers
 {
     [Area("Medico")]
@@ -24,13 +26,25 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             return View();
         }
 
-        public async Task<IActionResult> RegistrarHistoria()
+        /*public async Task<IActionResult> RegistrarHistoria(PacienteViewModel paciente)
         {
             var Tratamientos = await TratamientoService.GetTratamientos();
             ViewBag.TratamientoList = Tratamientos;
+            ViewBag.PacienteList = paciente;
+            return View();
+        }*/
+
+        public async Task<IActionResult> RegistrarHistoria(string Nombre, string Correo, string Apellido, string Telefono, string Dni)
+        {
+            var Tratamientos = await TratamientoService.GetTratamientos();
+            ViewBag.TratamientoList = Tratamientos;
+            ViewBag.NombreList = Nombre;
+            ViewBag.CorreoList = Correo;
+            ViewBag.ApellidoList = Apellido;
+            ViewBag.TelefonoList = Telefono;
+            ViewBag.DniList = Dni;
             return View();
         }
-
     }
     
 }

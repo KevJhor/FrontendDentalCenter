@@ -1,4 +1,14 @@
-﻿
+﻿@using FrontendDentalCenter.ViewModels;
+@{
+    //var pacientes = ViewBag.PacienteList as FrontendDentalCenter.ViewModels.PacienteViewModel;
+    var Nombre = ViewBag.NombreList as string;
+    var Apellido = ViewBag.ApellidoList as string;
+    var Correo = ViewBag.CorreoList as string;
+    var Telefono = ViewBag.TelefonoList as string;
+    var Dni = ViewBag.DniList as string;
+    var tratamiento = ViewBag.TratamientoList as List<TratamientoViewModel>;
+}
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,26 +25,26 @@
                         <legend>DATOS DEL CLIENTE</legend>
                         <label>
                             <span>NOMBRE:</span>
-                            <input type="text" readonly name="nombre">
+                            <input type="text" readonly name="nombre" placeholder=@Nombre>
                         </label>
                         <label for="">
                             <span>Email:</span>
-                            <input type="email" readonly name="email">
+                            <input type="email" readonly name="email" placeholder=@Correo>
                         </label>
 
                         <label for="">
                             <span>Apellido:</span>
-                            <input type="text" readonly name="apellido">
+                            <input type="text" readonly name="apellido" placeholder=@Apellido>
                         </label>
 
                         <label for="">
                             <span>Telefono:</span>
-                            <input type="text" readonly name="telefono">
+                            <input type="text" readonly name="telefono" placeholder=@Telefono>
                         </label>
 
                         <label for="">
                             <span>DNI:</span>
-                            <input type="text" readonly name="dni">
+                            <input type="text" readonly name="dni" placeholder=@Dni>
                         </label>
                     </fieldset>
 
@@ -58,7 +68,7 @@
                         </label>
                         <label>
                             <span>RUC:</span>
-                            <input type="text" name="ruc" readonly>
+                            <input type="text" name="ruc" readonly placeholder="20503644967">
                         </label>
                         <label>
                             <span>Especialidad:</span>
@@ -125,12 +135,8 @@
 </body>
 
 
-@using FrontendDentalCenter.ViewModels;
-@{
-    var tratamiento = ViewBag.TratamientoList as List<TratamientoViewModel>;
 
 
-}
 
 
 
