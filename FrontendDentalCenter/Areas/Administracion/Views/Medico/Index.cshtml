@@ -1,5 +1,152 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<div class="alert alert-primary">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Gestion de Medicos</h3>
+        </div>
+        <div class="col-md2">
+            <button id="btnAgregarMedico" class="btn btn-success">
+                Agregar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalRegistroMedico" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gestión de Medico</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" id="txtNombre" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Apellido</label>
+                                <input type="text" class="form-control" id="txtApellido" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Género</label>
+                                <input type="text" class="form-control" id="txtGenero" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarMedico">Guardar Cambios</button>
+                <input type="hidden" value="-1" id="hidIdMedico" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divListadoMedico">
+</div>
+
+<script>
+    $("#divListadoMedico").on('click', '.btnEditarMedico', function () {
+        let vIdMedico = $(this).attr('data-id');
+        $("#hidIdMedico").val(vIdMedico);
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroMedico'));
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Obtener", "Medico", new {Area="Administracion"})',
+            Cache: false,
+            data: { id: vIdMedico },
+            success: function (objMedico) {
+                console.log("El valor de objMedico es: " + JSON.stringify(objMedico))
+                $("#txtNombre").val(objMedico.nombre);
+                $("#txtApellido").val(objMedico.apellido);
+                $("#txtGenero").val(objMedico.genero);
+                myModal.show();
+            }
+        });
+
+    })
+    $("#divListadoMedico").on('click', '.btnEliminarMedico', function () {
+        let vIdMedico = $(this).attr('data-id');
+        if (confirm("¿Está seguro de eliminar el Medico?")) {
+            $.ajax({
+                type: "DELETE",
+                url: "@Url.Action("Eliminar", "Medico", new {Area = "Administracion"})",
+                data: { id: vIdMedico },
+                cache: false,
+                success: function (exito) {
+                    if (exito) {
+                        alert("Se eliminó correctamente");
+                        CargarListadoMedico();
+                    } else {
+                        alert("No se puede eliminar el Medico ya que cuenta con dependientes");
+                    }
+                }
+            });
+        }
+
+    });
+
+    $("#btnGuardarMedico").click(function () {
+        let vIdMedico = $("#hidIdMedico").val();
+        let vNombre = $("#txtNombre").val()
+        let vApellido = $("#txtApellido").val()
+        let vGenero = $("#txtGenero").val()
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroMedico'))
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Guardar","Medico", new{Area="Administracion"})',
+            Cache: false,
+            data: {
+                idMedico: vIdMedico,
+                nombre: vNombre,
+                apellido: vApellido,
+                genero: vGenero
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    alert("Se registró correctamente!");
+                    CargarListadoMedico();
+                    myModal.hide();
+                } else {
+                    alert("Ocurrió un error al registrar el Medico!");
+                }
+            }
+        });
+
+    });
+
+    $("#btnAgregarMedico").click(function () {
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroMedico'))
+        $("#hidIdMedico").val("");
+        $("#txtNombre").val("");
+        $("#txtApellido").val("");
+        $("#txtGenero").val("");
+        myModal.show();
+    });
+    CargarListadoMedico();
+    function CargarListadoMedico() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Listado", "Medico", new {Area = "Administracion"})',
+            cache: false,
+            success: function (dataHTML) {
+                $("#divListadoMedico").html(dataHTML);
+            }
+        });
+    }
+</script>

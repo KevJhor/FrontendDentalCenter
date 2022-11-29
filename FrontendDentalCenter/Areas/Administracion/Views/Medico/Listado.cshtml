@@ -1,17 +1,13 @@
-﻿@using FrontendDentalCenter.Models
+﻿@using FrontendDentalCenter.ViewModels
 @{
-    var medicos = ViewBag.MedicosList as IEnumerable<MedicoViewModel>;
+    var medicos = ViewBag.MedicoList as IEnumerable<FrontendDentalCenter.ViewModels.MedicoViewModel>;//puede ser motivo de error
 }
-
-
-
-
-<table class="table table-striped" id="tbListadoMedicos">
+<table class="table table-striped" id="tbListadoMedico">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Nombres</th>
-            <th>Apellidos</th>
+            <th>Id Medico</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
             <th>Genero</th>
             <th></th>
         </tr>
@@ -24,25 +20,18 @@
                 <td>@item.Nombre</td>
                 <td>@item.Apellido</td>
                 <td>@item.Genero</td>
-
+                <td>
+                    <button class="btn btn-warning btnEditarMedico" id="btnEditarMedico" data-id=" @item.IdMedico">Editar</button>
+                    <button class="btn btn-danger btnEliminarMedico" id="btnEliminarMedico" data-id="@item.IdMedico">Eliminar</button>
+                </td>
             </tr>
         }
     </tbody>
 </table>
 
-
 <script>
     loadDatatable();
     function loadDatatable() {
-        //$("#tbListadoMedico").DataTable();
-        let table = $("#tbListadoMedico").DataTable({
-            lengthChange: false,
-            buttons: ['copy', 'excel', 'pdf', 'colvis', 'print']
-
-        });
-
-        table.buttons().container()
-            .insertBefore("#tbListadoMedico_filter");
+    $('#tbListadoMedico').DataTable();
     }
-
 </script>
