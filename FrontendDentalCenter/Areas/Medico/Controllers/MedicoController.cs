@@ -52,7 +52,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
 
         }
        
-        public async Task<IActionResult> ListaHistoriaMedicaByPaciente(int id)
+        public async Task<IActionResult> ListaHistoriaMedicaByPaciente(int id,string Nombre, string Apellido)
         {
             var Historia = await MedicoService.GetHistoriaMedicaByIdPaciente(1);
             List<CabHistoriaMedicaViewModel> cabHistoria = new List<CabHistoriaMedicaViewModel>();
@@ -65,6 +65,8 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             ViewBag.HistoriaList = Historia;
             ViewBag.CabHistoriaList = cabHistoria;
             ViewBag.MedicoList = medicos;
+            ViewBag.Nombres = Nombre;
+            ViewBag.Apellidos = Apellido;
             return View();
         }
 
