@@ -1,4 +1,9 @@
-﻿<div class="text-center">
+﻿@{
+    var Medico = ViewBag.Medico as MedicoViewModel;
+}
+
+
+<div class="text-center">
     <h1 class="display-4">DATOS DE HISTORIAS MÉDICAS</h1>
 
 </div>
@@ -26,7 +31,7 @@
             <img src="https://i.postimg.cc/L5GHm9gS/Medico.png" width="350" height="500" />
         </div>
         <div class="text-center md-3">
-            <h1>Medico</h1>
+            <h1>Medico @Medico.Nombre @Medico.Apellido</h1>
         </div>
     </div>
 </div>

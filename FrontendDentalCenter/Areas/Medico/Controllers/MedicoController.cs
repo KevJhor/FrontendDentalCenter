@@ -13,7 +13,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
     public class MedicoController : Controller
     {
        
-        private int idMedico;
+        //private int idMedico;
         /*public MedicoController(int id)
         {
             idMedico = id;
@@ -21,8 +21,11 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
         }*/
         
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int idM)
         {
+            //ViewBag.idMedico = idM;
+            var Medico = await MedicoService.GetMedicosbyId(idM);
+            ViewBag.Medico = Medico;
             return View();
         }
         public IActionResult Odontograma()
