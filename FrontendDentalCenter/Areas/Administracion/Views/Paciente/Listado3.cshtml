@@ -1,7 +1,12 @@
-﻿@using FrontendDentalCenter.ViewModels
+﻿@using FrontendDentalCenter.Models
+@using FrontendDentalCenter.ViewModels
 @{
-    var Pacientes = ViewBag.PacienteList as IEnumerable<PacienteViewModel>;//puede ser motivo de error
+    var pacientes = ViewBag.PacientesList as IEnumerable<PacienteViewModel>;
 }
+
+
+
+
 <table class="table table-striped" id="tbListadoPaciente">
     <thead>
         <tr>
@@ -14,10 +19,11 @@
             <th>Correo</th>
             <th>Frecuente</th>
             <th></th>
+
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Pacientes)
+        @foreach (var item in pacientes)
         {
             <tr>
                 <td>@item.IdPaciente</td>
@@ -28,18 +34,24 @@
                 <td>@item.Telefono</td>
                 <td>@item.Correo</td>
                 <td>@item.Frecuente</td>
-                <td>
-                    <button class="btn btn-warning btnEditarPaciente" id="btnEditarPaciente" data-id=" @item.IdPaciente">Editar</button>
-                    <button class="btn btn-danger btnEliminarPaciente" id="btnEliminarPaciente" data-id="@item.IdPaciente">Eliminar</button>
-                </td>
             </tr>
         }
     </tbody>
 </table>
 
+
 <script>
     loadDatatable();
     function loadDatatable() {
-    $('#tbListadoPaciente').DataTable();
+        //$("#tbListadoCliente").DataTable();
+        let table = $("#tbListadoPaciente").DataTable({
+            lengthChange: false,
+            buttons: ['copy', 'excel', 'pdf', 'colvis', 'print']
+
+        });
+
+        table.buttons().container()
+            .insertBefore("#tbListadoCliente_filter");
     }
+
 </script>

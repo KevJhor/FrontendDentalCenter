@@ -1,5 +1,199 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<div class="alert alert-primary">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Gestion de Pacientes</h3>
+        </div>
+        <div class="col-md2">
+            <button id="btnAgregarPaciente" class="btn btn-success">
+                Agregar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalRegistroPaciente" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gestión de Paciente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" id="txtNombre" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Apellido</label>
+                                <input type="text" class="form-control" id="txtApellido" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>DNI</label>
+                                <input type="text" class="form-control" id="txtDni" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Fecha De Nacimiento AAAA/MM/DD</label>
+                                <input type="text" class="form-control" id="txtFechaDeNac" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Número de teléfono</label>
+                                <input type="text" class="form-control" id="txtTelefono" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" id="txtCorreo" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Es Frecuente</label>
+                                <input type="text" class="form-control" id="txtFrecuente" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarPaciente">Guardar Cambios</button>
+                <input type="hidden" value="-1" id="hidIdPaciente" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divListadoPaciente">
+</div>
+
+<script>
+    $("#divListadoPaciente").on('click', '.btnEditarPaciente', function () {
+        let vIdPaciente = $(this).attr('data-id');
+        $("#hidIdPaciente").val(vIdPaciente);
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroPaciente'));
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Obtener", "Paciente", new {Area="Administracion"})',
+            Cache: false,
+            data: { id: vIdPaciente },
+            success: function (objPaciente) {
+                console.log("El valor de objPaciente es: " + JSON.stringify(objPaciente))
+                $("#txtNombre").val(objPaciente.nombre);
+                $("#txtApellido").val(objPaciente.apellido);
+                $("#txtDni").val(objPaciente.dni);
+                $("#txtFechaDeNac").val(objPaciente.fechaDeNac);
+                $("#txtTelefono").val(objPaciente.telefono);
+                $("#txtCorreo").val(objPaciente.correo);
+                $("#txtFrecuente").val(objPaciente.frecuente);
+                myModal.show();
+            }
+        });
+
+    })
+    $("#divListadoPaciente").on('click', '.btnEliminarPaciente', function () {
+        let vIdPaciente = $(this).attr('data-id');
+        if (confirm("¿Está seguro de eliminar el Paciente?")) {
+            $.ajax({
+                type: "DELETE",
+                url: "@Url.Action("Eliminar", "Paciente", new {Area = "Administracion"})",
+                data: { id: vIdPaciente },
+                cache: false,
+                success: function (exito) {
+                    if (exito) {
+                        alert("Se eliminó correctamente");
+                        CargarListadoPaciente();
+                    } else {
+                        alert("No se puede eliminar el Paciente ya que cuenta con dependientes");
+                    }
+                }
+            });
+        }
+
+    });
+
+    $("#btnGuardarPaciente").click(function () {
+        let vIdPaciente = $("#hidIdPaciente").val();
+        let vNombre = $("#txtNombre").val()
+        let vApellido = $("#txtApellido").val()
+        let vDni = $("#txtDni").val()
+        let vFechaDeNac = $("#txtFechaDeNac").val()
+        let vTelefono = $("#txtTelefono").val()
+        let vCorreo = $("#txtCorreo").val()
+        let vFrecuente = $("#txtFrecuente").val()
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroPaciente'))
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Guardar","Paciente", new{Area="Administracion"})',
+            Cache: false,
+            data: {
+                idPaciente: vIdPaciente,
+                nombre: vNombre,
+                apellido: vApellido,
+                dni: vDni,
+                fechaDeNac: vFechaDeNac,
+                telefono: vTelefono,
+                correo: vCorreo,
+                frecuente: vFrecuente
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    alert("Se registró correctamente!");
+                    CargarListadoPaciente();
+                    myModal.hide();
+                } else {
+                    alert("Ocurrió un error al registrar el Paciente!");
+                }
+            }
+        });
+
+    });
+
+    $("#btnAgregarPaciente").click(function () {
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroPaciente'))
+        $("#hidIdPaciente").val("");
+        $("#txtNombre").val("");
+        $("#txtApellido").val("");
+        $("#txtDni").val("");
+        $("#txtFechaDeNac").val("");
+        $("#txtTelefono").val("");
+        $("#txtCorreo").val("");
+        $("#txtFrecuente").val("");
+        myModal.show();
+    });
+    CargarListadoPaciente();
+    function CargarListadoPaciente() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Listado", "Paciente", new {Area = "Administracion"})',
+            cache: false,
+            success: function (dataHTML) {
+                $("#divListadoPaciente").html(dataHTML);
+            }
+        });
+    }
+</script>
