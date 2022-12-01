@@ -1,9 +1,77 @@
-﻿<h2> Bienvenido Renzo</h2>
+﻿@using FrontendDentalCenter.ViewModels
+@{
+    var Paciente = ViewBag.Paciente as PacienteViewModel;
+}
 
-<div class="align-content-center">
-    <div style="height: 350px;">
-        <img src="https://png.pngtree.com/png-vector/20190710/ourlarge/pngtree-user-vector-avatar-png-image_1541962.jpg" width="300" height="300" />
+<div class="container3 col-md-3" id="form-login">
+    <div class="row" id="div-login">
+        <div class="col-mb-3" align="center">
+            <img src="https://i.postimg.cc/0jDwJCJr/tipos-de-pacientes-consulta-mujer.jpg" width="600" height="350" />
+        </div>
+        <div class="text-center md-3 body">
+            <h1>Paciente: @Paciente.Nombre @Paciente.Apellido</h1>
+        </div>
     </div>
 </div>
 
-@*<img src="https://png.pngtree.com/png-vector/20190710/ourlarge/pngtree-user-vector-avatar-png-image_1541962.jpg" class="img-thumbnail" alt="auto">*@
+<div class="container2 col-md-3" id="caja">
+    <div class="mb-3 row">
+
+        <a href="@Url.Action("Cita","Index",new{ idCita=Paciente.IdPaciente})" button class="btn" role="button">CONSULTAR CITA</a>
+    </div>
+    <div class="mb-3 row">
+        <a href="http://localhost:5181/Paciente/Cita " button class="btn">Manejar Citas</a>
+    </div>
+</div>
+
+<style>
+    #form-login {
+        margin-top: 35%;
+    }
+
+    #form-login {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        align-content: center;
+    }
+
+    .container2 {
+        position: relative;
+        left: 780px;
+        top: -680px;
+    }
+
+    .container3 {
+        position: relative;
+        left: 150px;
+        top: -400px;
+    }
+
+    .btn {
+        border: 2px solid #19be8c;
+        color: white;
+        font-size: 20px;
+        background: #19be8c;
+        opacity: 0.9;
+    }
+
+    .display-4 {
+        font-size: 60px;
+        color: #19be8c;
+        font-weight: 900;
+    }
+
+    .btn:active {
+        transform: translateY(4px);
+    }
+
+    .btn:hover {
+        opacity: 1;
+        color: whitesmoke;
+    }
+
+    .body {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    }
+</style>
