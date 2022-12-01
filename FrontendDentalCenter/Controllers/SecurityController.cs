@@ -12,13 +12,22 @@ namespace FrontendDentalCenter.Controllers
         
 
         private int IDMedico;
+        private int IdPaciente;
         public int getIdMedico()
         {
             return IDMedico;
         }
+        public int getIdPaciente()
+        {
+            return IdPaciente;
+        }
         public void setIdMedico(int id)
         {
             IDMedico = id;
+        }
+        public void setIdPaciente(int id)
+        {
+            IdPaciente = id;
         }
         public IActionResult Login()
         {
@@ -43,13 +52,14 @@ namespace FrontendDentalCenter.Controllers
         public async Task<IActionResult> Signin(string correo, string clave)
         {
            
-              var userLogin = new LoginData() 
-              {
-                  Usuario = correo,
-                  Contraseña = clave
-              };
-              var auth = await UserServices.Login(userLogin);
-              setIdMedico(auth.IdMedico);
+            var userLogin = new LoginData() 
+            {
+                Usuario = correo,
+                Contraseña = clave
+            };
+            var auth = await UserServices.Login(userLogin);
+            setIdMedico(auth.IdMedico);
+            setIdPaciente(auth.IdPaciente);
             
            // MedicoController medicoController = new MedicoController(HelperUploadFiles,auth.IdMedico);
             if (auth == null || auth.Tipo==null)
@@ -63,7 +73,7 @@ namespace FrontendDentalCenter.Controllers
                 }
                 else if (auth.Tipo == "Paciente")
                 {
-                    return RedirectToAction("Home", "Paciente");
+                    return RedirectToAction("Index", "Home", new { Area = "Paciente", idP = getIdPaciente() });
                 }
                 else
                 {
