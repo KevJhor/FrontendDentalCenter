@@ -14,10 +14,10 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> ListaCita(int idCita)
+        public async Task<IActionResult> ListaCita()
         {
 
-            var citas = await CitaServices.GetCitaIdMedico(idCita);
+            var citas = await CitaServices.GetCitaIdMedico(1);
             List<int> ids = new List<int>();
             List < PacienteViewModel > pacientes = new List<PacienteViewModel>();
            
