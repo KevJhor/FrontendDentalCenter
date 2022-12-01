@@ -10,7 +10,8 @@
 </div>
 <div class="container2 col-md-3" id="caja">
     <div class="mb-3 row">
-        <a href="http://localhost:5181/Medico/Cita/ListaCita" button class="btn" role="button">CONSULTAR HISTORIAL</a>
+        
+        <a href="@Url.Action("ListaCita","Cita",new{ idCita=Medico.IdMedico})" button class="btn" role="button">CONSULTAR HISTORIAL</a>
     </div>
     <div class="mb-3 row">
         <a href="http://localhost:5181/Medico/Cita/ListaCita " button class="btn">REGISTRAR HISTORIAL</a>
