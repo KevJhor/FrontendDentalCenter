@@ -1,6 +1,5 @@
 ﻿using FrontendDentalCenter.Models;
 using FrontendDentalCenter.Services;
-using FrontendDentalCenter.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Immutable;
 
@@ -34,7 +33,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
 
             foreach (var item in idDistic)
             {
-                pacientes.Add((PacienteViewModel)await PacienteService.GetPacientesbyId(item));
+                pacientes.Add((PacienteViewModel)await PacienteService.GetPacienteId(item));
                 
 
             }

@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administracion\Data\" />
-    <Folder Include="Areas\Administracion\Models\" />
     <Folder Include="Areas\Medico\Data\" />
     <Folder Include="Areas\Paciente\Data\" />
   </ItemGroup>
