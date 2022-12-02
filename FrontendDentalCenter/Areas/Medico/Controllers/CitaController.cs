@@ -14,10 +14,12 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> ListaCita(int idCita)
+        public async Task<IActionResult> ListaCita(int idMed)
         {
 
-            var citas = await CitaServices.GetCitaIdMedico(idCita);
+            var citas = await CitaServices.GetCitaIdMedico(idMed);
+            var Medico = await MedicoService.GetMedicosbyId(idMed);
+            
             List<int> ids = new List<int>();
             List < PacienteViewModel > pacientes = new List<PacienteViewModel>();
            
@@ -40,6 +42,8 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             }
 
             ViewBag.pacienteList = pacientes;
+            ViewBag.Medico = Medico;
+            
             return View();
         }
     }

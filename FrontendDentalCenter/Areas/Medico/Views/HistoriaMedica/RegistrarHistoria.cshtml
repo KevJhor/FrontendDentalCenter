@@ -6,7 +6,10 @@
     var Correo = ViewBag.CorreoList as string;
     var Telefono = ViewBag.TelefonoList as string;
     var Dni = ViewBag.DniList as string;
+    var NombreM = ViewBag.NombreM as string;
+    var ApellidoM = ViewBag.ApellidoM as string;
     var tratamiento = ViewBag.TratamientoList as List<TratamientoViewModel>;
+    var medicamentos = ViewBag.MedicamentoList as List<MedicamentoViewModel>;
 }
 
 <head>
@@ -52,11 +55,11 @@
                         <legend>FECHA</legend>
                         <label>
                             <span>Fecha:</span>
-                            <input type="date" name="fecha">
+                            <input type="date" name="fecha" id="txtFecha">
                         </label>
                         <label>
                             <span>Hora:</span>
-                            <input type="time" name="hora">
+                            <input type="time" name="hora" id="txtHora">
                         </label>
                     </fieldset>
 
@@ -64,16 +67,17 @@
                         <legend>RECETA</legend>
                         <label>
                             <span>Nombre:</span>
-                            <input type="text" name="nombre" readonly>
+                            <input type="text" name="nombreMed" readonly placeholder=@NombreM>
+                        </label>
+                        <label>
+                            <span>Apellido:</span>
+                            <input type="text" name="ApellidoMed" readonly placeholder=@ApellidoM>
                         </label>
                         <label>
                             <span>RUC:</span>
                             <input type="text" name="ruc" readonly placeholder="20503644967">
                         </label>
-                        <label>
-                            <span>Especialidad:</span>
-                            <input type="text" name="especialidad" readonly>
-                        </label>
+                        
                         <div class="table">
                             <table border>
                                 <thead>
@@ -85,30 +89,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                    </tr>
-                                    <tr>
-                                        <td>-</td>
-                                        <td>-</td>
-                                        <td>-</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
+
+
+
+
                         </div>
 
-                        <div class="b">
-                            <button class="boton4">Agregar Medicameto</button>
-                        </div>
+                        
                         <label class="ComBXM">
 
                             <select name="" id="lang">
-                                <option value="Medicamento1">Medicamento1</option>
-                                <option value="Medicamento2">Medicamento2</option>
-                                <option value="Medicamento3">Medicamento3</option>
-                                <option value="Medicamento4">Medicamento4</option>
+                                <option value="Seleccionar" selected>Seleccionar</option>
+                                @foreach (var item in medicamentos)
+                                {
+                                    <option value="@item.Nombre">@item.Nombre</option>
+                                }
                             </select>
                         </label>
                         <label class="observaciones">
@@ -119,7 +117,14 @@
 
                     
                 </form>
+
                 
+                    <div class="b">
+                        <button id="buttonAddMed" type="submit" class="boton4">Agregar Medicameto</button>
+                    </div>
+                
+
+               
 
                 <fieldset class="dato-cliente">
                     <div class="botones">
@@ -262,12 +267,39 @@
         myModal.show();
     });
 
+    $("#buttonAddMed").click(function () {
+        let vClinica = "DentalCenter"
+        let vFecha = $("#txtFecha").val()
+        let vHora = $("#txtHora").val()
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CrearCabecera","HistoriaMedica", new{Area="Medico"})',
+            Cache: false,
+            data: {
+                nombreClinica: vClinica,
+                fecha: vFecha,
+                
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    alert("Se registró correctamente!");
+                    //CargarListadoTratamiento();
+                    
+                } else {
+                    alert("Ocurrió un error al registrar el Tratamiento!");
+                }
+            }
+        });
+
+    });
 
 
 </script>
 
 
 <style>
+
+   
 
     form {
         display: grid;
@@ -337,7 +369,7 @@
     form .b {
         grid-row: 3 / span 2;
         grid-column: 3 / span 15;
-        text-align: center;
+        text-align: center;text-align: center;
     }
 
     form .observaciones {
@@ -392,8 +424,8 @@
     }
 
     .boton4 {
-        padding: 10px;
-        background-color: #0a0;
+        padding: 10px 20px;
+        background-color: #0a0;position: absolute;right:14%; top:45%
     }
 
     form .ComBXM {
@@ -427,6 +459,7 @@
 .btn-group .btnM:hover {
   background-color: #3e8e41;
 }
+
 
 
 </style>

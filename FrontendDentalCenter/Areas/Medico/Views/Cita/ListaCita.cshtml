@@ -3,6 +3,7 @@
 
 @{
     var pacientes = ViewBag.pacienteList as IEnumerable<PacienteViewModel>;
+    var Medico = ViewBag.Medico as MedicoViewModel;
 }
 
 
@@ -26,7 +27,7 @@
                 <td>@item.Dni</td>
                 <td>
                     <a href="@Url.Action("ListaHistoriaMedicaByPaciente","Medico",new{ Nombre=item.Nombre,Apellido=@item.Apellido})" class="btn btn-success">Ver Historial</a>
-                    <a href="@Url.Action("RegistrarHistoria", "HistoriaMedica" , new { Nombre=item.Nombre,Correo =@item.Correo ,Apellido=@item.Apellido, Telefono=@item.Telefono, Dni=@item.Dni})" class="btn btn-success">Registrar Historial</a>
+                    <a href="@Url.Action("RegistrarHistoria", "HistoriaMedica" , new { Nombre=item.Nombre,Correo =@item.Correo ,Apellido=@item.Apellido, Telefono=@item.Telefono, Dni=@item.Dni, NombreM =Medico.Nombre, ApellidoM = Medico.Apellido})" class="btn btn-success">Registrar Historial</a>
  
                     
                 </td>
