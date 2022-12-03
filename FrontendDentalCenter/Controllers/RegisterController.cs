@@ -7,8 +7,8 @@ namespace FrontendDentalCenter.Controllers
     public class RegisterController : Controller
     {
         public async Task<IActionResult> Guardar(string nombre, string apellido,
-                                         string correo, int DNI, string telefono, 
-                                         DateTime fechaNac)
+                                         string correo, int DNI, string telefono
+                                         )
         {
             bool exito = true;
             var objPaciente = new PacienteViewModelPost2()
@@ -17,8 +17,7 @@ namespace FrontendDentalCenter.Controllers
                 Apellido = apellido,
                 Correo = correo,
                 Dni = DNI,
-                Telefono = telefono,
-                FechaDeNac = fechaNac
+                Telefono = telefono
             };
             exito = await PacienteService.InsertPaciente2(objPaciente);
 

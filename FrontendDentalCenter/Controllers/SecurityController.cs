@@ -85,6 +85,10 @@ namespace FrontendDentalCenter.Controllers
                 {
                     return RedirectToAction("Index", "Home", new { Area = "Paciente", idP = getIdPaciente() });
                 }
+                else if (auth.Tipo == "Administrador")
+                {
+                    return RedirectToAction("Index", "Home", new { Area = "Administracion"});
+                }
 
                 //else if (auth.Tipo == "Administrador")
                 //{
