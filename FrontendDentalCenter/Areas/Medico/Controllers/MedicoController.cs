@@ -74,7 +74,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             return View();
         }
 
-        
+       
 
     }
 }

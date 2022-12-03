@@ -87,7 +87,18 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             }
         }
 
-        
+        public async Task<IActionResult> CrearTratamiento(string tipo, string duracionDias, string precio, string descripcion)
+        {
+            TratamientoViewModelPost tratamiento = new TratamientoViewModelPost();
+            tratamiento.Tipo = tipo;
+            tratamiento.DuracionDias = int.Parse(duracionDias);
+            tratamiento.Precio = int.Parse(precio);
+            tratamiento.Descripcion = descripcion;
+            var confir = await TratamientoService.InsertTratamiento(tratamiento);
+            return Json(confir);
+        }
+
+
     }
     
 }

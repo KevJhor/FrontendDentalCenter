@@ -17,6 +17,7 @@ namespace FrontendDentalCenter.Services
             using var response = await httpClient.PostAsync(url, data);
 
             var apiResponse = await response.Content.ReadAsStringAsync();
+            
             var userResponse = JsonConvert.DeserializeObject<LoginGetShowViewModel>(apiResponse);
 
             return userResponse;

@@ -200,12 +200,7 @@
                             <div class="col-sm-2">
                                 <input type="text" class="form-control" id="Duracion" placeholder="">
                             </div>
-                            <div class="col-auto">
-                                <label for="colFormLabelSm" class="col-sm-2 col-form-label ">días</label>
-                            </div>
-                            <div class="col-sm-2">
-                                <input type="text" class="form-control" id="Dias" placeholder="">
-                            </div>
+                            
                         </form>
                         <form class="row g-2">
                             <div class="col-auto">
@@ -215,10 +210,10 @@
                                 <input type="text" class="form-control" id="Precio" placeholder="">
                             </div>
                             <div class="col-auto">
-                                <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Nombre</label>
+                                <label for="colFormLabelSm" class="col-sm-2 col-form-label ">Descripcion</label>
                             </div>
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" id="Nombre" placeholder="">
+                                <input type="text" class="form-control" id="Descripcion" placeholder="">
                             </div>
                         </form>
 
@@ -232,16 +227,17 @@
                 <div class="btn-group">
 
                     <form>
-                    <button type="button" class="btnM" onclick="myFunction()">Crear</button>
+                    <button type="button" class="btnM" onclick="myFunction()">Nuevo</button>
                     
                 </form>
 
                 <form>
-                    <button type="button" class="btnM">Seleccionar</button>
+                    <button id="btSeleccionar" type="button" class="btnM">Seleccionar</button>
                 </form>
 
                 <form>
                         <button type="button" class="btnM" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" id="btCrearT" style="display: none" class="btnM">Crear</button>
                 </form>
                 </div>
                 
@@ -252,13 +248,43 @@
 
 
 
-
+<div id="divListadoTratamientos">
+</div>
 
 <script>
 
     
-    
+   
 
+    $("#btCrearT").click(function () {
+        
+        let vTipo = $("#Tipo").val()
+        let vDuracion = $("#Duracion").val()
+        let vPrecio = $("#Precio").val()
+        let vDescripcion = $("#Descripcion").val()
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroTratamiento'))
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CrearTratamiento","HistoriaMedica", new{Area="Medico"})',
+            Cache: false,
+            data: {
+                tipo: vTipo,
+                duracionDias: vDuracion,
+                precio: vPrecio,
+                descripcion: vDescripcion
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    alert("Se registró correctamente!");
+                    
+                    
+                } else {
+                    alert("Ocurrió un error al registrar el Tratamiento!");
+                }
+            }
+        });
+
+    });
 
     
 
@@ -266,10 +292,22 @@
 
     function myFunction() {
         var x = document.getElementById("idDatos");
+        var y = document.getElementById("btSeleccionar");
+        var z = document.getElementById("btCrearT");
         if (x.style.display === "none") {
             x.style.display = "block";
         } else {
             x.style.display = "none";
+        }
+        if (y.style.display === "none") {
+            y.style.display = "block";
+        } else {
+            y.style.display = "none";
+        }
+        if (z.style.display === "none") {
+            z.style.display = "block";
+        } else {
+            z.style.display = "none";
         }
     }
 
