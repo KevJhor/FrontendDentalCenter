@@ -2,7 +2,26 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Bienvenido</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container col-md-3 imgCenter" id="divInicio" style="align-items">
+        <div class="mb-3 row">
+            <div style="height: 350px;">
+                <img src="https://i.postimg.cc/x1LNSptN/Dental-Center.png" width="400" height="400" />
+            </div>
+        </div>
+        <div class="mb-3 row" style="align-items">
+        <a href="@Url.Action("Register","Security")" class="btn btn-success">Registrarse</a>
+        <p></p>
+        <a href="@Url.Action("Login","Security")" class="btn btn-success">Ya soy usuario</a>
+    </div>
 </div>
+
+<style>
+    .imgCenter{
+        margin-left: auto;
+        margin-right: auto;
+        width: 32%;
+    }
+    #divInicio{
+        padding-top: 80px;
+    }
+</style>

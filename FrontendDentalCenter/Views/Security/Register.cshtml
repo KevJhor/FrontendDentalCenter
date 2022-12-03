@@ -6,17 +6,22 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Semana02DPA_MVC</title>
+    <title>@ViewData["Title"] - FrontendDentalCenter</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Semana02DPA_MVC.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FrontendDentalCenter.styles.css" asp-append-version="true" />
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js"></script>
 </head>
 <body>
-    <div class="container" id="form-login">
-        <form method="post" action="@Url.Action("Register","Security")">
+    <div class="container" id="form-register">
             <div class="row" id="div-login">
                 <div class="col-md-4">
                     <img src="https://img.freepik.com/premium-vector/online-registration-sign-up-login-account-smartphone-app-user-interface-with-secure-password-mobile-application-ui-web-banner-access-cartoon-people-vector-illustration_2175-1060.jpg?w=2000" width="300" height="200" />
@@ -24,46 +29,108 @@
                 <div class="col-md-3">
                     <div class="col">
                         <div class="row">
-                            <h1>Register</h1>
+                            <h1>Registro de Paciente</h1>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <input type="text" name="firstName" class="form-control" placeholder="First Name">
+                                <input required type="text" name="txtNombre" class="form-control" placeholder="Nombre">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <input type="text" name="lastName" class="form-control" placeholder="Last Name">
+                                <input required type="text" name="txtApellidos" class="form-control" placeholder="Apellidos">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 mb-3">
-                                <input type="email" name="correo" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email address">
+                                <input required type="text" name="txtCorreo" class="form-control" aria-describedby="emailHelp" placeholder="Dirección email">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 mb-3">
-                                <input type="password" name="clave" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <input required type="text" name="txtDNI" class="form-control" placeholder="DNI">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <input required type="text" name="txtTelefono" class="form-control" placeholder="Teléfono de contacto">
+                            </div>
+                        </div>
+                        <fieldset class="dato-fecha col-md-12 mb-3 row">
+                            <label>
+                                <span>Fecha de nacimiento:</span>
+                                <input type="date" name="datefecha" class="col-md-5" required pattern="\d{2}-\d{2}-\d{4}/">
+                            </label>
+                        </fieldset>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <input required type="text" name="txtContraseña" class="form-control" placeholder="Contraseña">
                             </div>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                            <button type="submit" class="btn btn-primary btnRegistrar">Registrarse</button>
                             @*<a href="#">Forgot password?</a>*@
                         </div>
                         <div class="d-grid gap-2">
-                            You have an account?
-                            <button type="button" class="btn btn-success" onclick="window.location.href='@Url.Action("Login","Security")';">Login</button>
+                            ¿Ya tienes un usuario?
+                            <button type="button" class="btn btn-success" onclick="window.location.href='@Url.Action("Login","Security")';">Iniciar Sesión</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-        </form>
     </div>
 </body>
 
 </html>
+<script>
+    $("#form-register").on('click', '.btnRegistrar', function () {
+        let vNombre = $("#txtTipo").val()
+        let vApellido = $("#txtDuracion").val()
+        let vCorreo = $("#txtCorreo").val()
+        let vDNI = $("#txtDNI").val()
+        let vTelefono = $("#txtTelefono").val()
+        let vFechaDeNac = $("#datefecha").val()
+        let vContraseña = $("#txtContraseña").val()
 
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Guardar","Register", new{Area=""})',
+            Cache: false,
+            data: {
+                nombre: vNombre,
+                apellido: vApellido,
+                correo: vCorreo,
+                descripcion: vDNI,
+                telefono: vTelefono,
+                fechaDeNac: vFechaDeNac,
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    alert("Se registró correctamente!");
+                } else {
+                    alert("Ocurrió un error al registrar el Paciente!");
+                }
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GuardarUsuario","Register", new{Area=""})',
+            Cache: false,
+            data: {
+                nombre: vNombre,
+                correo: vCorreo,
+                contraseña: vContraseña
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    alert("Se registró correctamente!");
+                } else {
+                    alert("Ocurrió un error al registrar el Usuario!");
+                }
+            }
+        });
+    });
+
+</script>
 <style>
     #form-login {
         margin-top: 10%;

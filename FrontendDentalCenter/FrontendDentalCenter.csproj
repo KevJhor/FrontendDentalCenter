@@ -17,4 +17,11 @@
     <Folder Include="Areas\Paciente\Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Home\Privacy.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

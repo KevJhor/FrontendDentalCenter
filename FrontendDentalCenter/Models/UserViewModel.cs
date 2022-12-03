@@ -20,6 +20,7 @@
         public int Id { get; set; }
         public int IdMedico { get; set; }
         public int IdPaciente { get; set; }
+        public int IdAsistente { get; set; }
         public string? Tipo { get; set; }
     }
 
