@@ -10,6 +10,7 @@
     var ApellidoM = ViewBag.ApellidoM as string;
     var tratamiento = ViewBag.TratamientoList as List<TratamientoViewModel>;
     var medicamentos = ViewBag.MedicamentoList as List<MedicamentoViewModel>;
+    var medicamentosAc = ViewBag.ListMedicamentos as List<MedicamentoViewModel>;
 }
 
 <head>
@@ -78,26 +79,12 @@
                             <input type="text" name="ruc" readonly placeholder="20503644967">
                         </label>
                         
-                        <div class="table">
-                            <table border>
-                                <thead>
-                                    <tr>
-                                        <th>Codigo</th>
-                                        <th>Nombre</th>
-                                        <th>Tipo</th>
-                                        <th>Precio</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                       
 
-                                </tbody>
-                            </table>
-
-
-
-
-                        </div>
-
+                        
+                            
+                        
+                       
                         
                         <label class="ComBXM">
 
@@ -105,14 +92,33 @@
                                 <option value="Seleccionar" selected>Seleccionar</option>
                                 @foreach (var item in medicamentos)
                                 {
-                                    <option value="@item.Nombre">@item.Nombre</option>
+                                    <option value="@item.IdMedicamento">@item.Nombre</option>
                                 }
                             </select>
+
+                            <div>
+                                <label>
+                                    <span>Dosis:</span>
+                                    <input type="text" id="txtDosis">
+                                </label>
+                                <label>
+                                    <span>Unidad de Medida:</span>
+                                    <input type="text" id="txtUnidadM">
+                                </label>
+                                <label>
+                                    <span>Descripción:</span>
+                                    <input type="text" id="txtDescripcionM">
+                                </label>
+                            </div>
+
                         </label>
                         <label class="observaciones">
                             <span>Observaciones</span>
                             <textarea name="Observaciones" rows="10" class="observaciones"></textarea>
                         </label>
+
+                       
+                        
                     </fieldset>
 
                     
@@ -121,6 +127,7 @@
                 
                     <div class="b">
                         <button id="buttonAddMed" type="submit" class="boton4">Agregar Medicameto</button>
+                         <p id="areaContador"></p>
                     </div>
                 
 
@@ -248,6 +255,15 @@
 
 
 <script>
+
+    
+    
+
+
+    
+
+
+
     function myFunction() {
         var x = document.getElementById("idDatos");
         if (x.style.display === "none") {
@@ -266,11 +282,21 @@
         $("#Dias").val("");
         myModal.show();
     });
+    
+    var contadorF = 0
+    
+
 
     $("#buttonAddMed").click(function () {
         let vClinica = "DentalCenter"
         let vFecha = $("#txtFecha").val()
         let vHora = $("#txtHora").val()
+        let vIdMedicamento = $("#lang").val()
+        let vDosis = $("#txtDosis").val()
+        let vUnidadM = $("#txtUnidadM").val()
+        let vDescipcionM = $("#txtDescripcionM").val()
+        contadorF +=1
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("CrearCabecera","HistoriaMedica", new{Area="Medico"})',
@@ -278,15 +304,20 @@
             data: {
                 nombreClinica: vClinica,
                 fecha: vFecha,
-                
+                idMedicamento: vIdMedicamento,
+                dosis: vDosis,
+                unidadMedida: vUnidadM,
+                DescripcionM: vDescipcionM,
+                cont: contadorF
             },
             success: function (valorRespuesta) {
                 if (valorRespuesta) {
                     alert("Se registró correctamente!");
+                    loadDatatableMedicamento();
                     //CargarListadoTratamiento();
                     
                 } else {
-                    alert("Ocurrió un error al registrar el Tratamiento!");
+                    alert("Ocurrió un error al registrar la receta!");
                 }
             }
         });
@@ -425,12 +456,12 @@
 
     .boton4 {
         padding: 10px 20px;
-        background-color: #0a0;position: absolute;right:14%; top:45%
+        background-color: #0a0;position: absolute;right:14%; top:50%
     }
 
     form .ComBXM {
         grid-row: 3 / span 1;
-        grid-column: 1 / span 5;
+        grid-column: 3 / span 5;
         margin: auto;
     }
 

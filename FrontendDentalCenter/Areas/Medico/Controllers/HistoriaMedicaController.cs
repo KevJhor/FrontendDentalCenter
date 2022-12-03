@@ -11,6 +11,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
     {
         private readonly SecurityController securityController;
         int idMedico;
+        
         public HistoriaMedicaController(SecurityController security)
         {
             securityController = security;
@@ -39,6 +40,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
         {
             var Tratamientos = await TratamientoService.GetTratamientos();
             var Medicamentos = await MedicamentoServices.GetMedicamentos();
+            
             ViewBag.TratamientoList = Tratamientos;
             ViewBag.NombreList = Nombre;
             ViewBag.CorreoList = Correo;
@@ -51,14 +53,41 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CrearCabecera(string nombreClinica, DateTime fecha)
+        public async Task<IActionResult> CrearCabecera(string nombreClinica, DateTime fecha, string idMedicamento, string dosis, string unidadMedida, string DescripcionM, int cont)
         {
-            CabRecetaViewModelPost cabModel = new CabRecetaViewModelPost();
-            cabModel.NombreDeClinica = nombreClinica;
-            cabModel.Fecha = fecha;
-            bool exito = await CabRecetaServices.InsertCabReceta(cabModel);
-            return Json(exito);
+            if(cont == 1)
+            {
+                CabRecetaViewModelPost cabModel = new CabRecetaViewModelPost();
+                cabModel.NombreDeClinica = nombreClinica;
+                cabModel.Fecha = fecha;
+                bool exito = await CabRecetaServices.InsertCabReceta(cabModel);
+                RecetaViewModelPost receta = new RecetaViewModelPost();
+                var UltimaCabR = await CabRecetaServices.GetUltimaCabReceta();
+                receta.IdRecetaMedica = UltimaCabR.IdRecetaMedica;
+                receta.IdMedicamento = int.Parse(idMedicamento);
+                receta.Dosis = double.Parse(dosis);
+                receta.UnidadMedida = unidadMedida;
+                receta.Descripcion = DescripcionM;
+                bool exito2 = await CabRecetaServices.InsertReceta(receta);
+
+
+                return Json(exito2);
+            }
+            else
+            {
+                RecetaViewModelPost receta = new RecetaViewModelPost();
+                var UltimaCabR = await CabRecetaServices.GetUltimaCabReceta();
+                receta.IdRecetaMedica = UltimaCabR.IdRecetaMedica;
+                receta.IdMedicamento = int.Parse(idMedicamento);
+                receta.Dosis = double.Parse(dosis);
+                receta.UnidadMedida = unidadMedida;
+                receta.Descripcion = DescripcionM;
+                bool exito2 = await CabRecetaServices.InsertReceta(receta);
+                return Json(exito2);
+            }
         }
+
+        
     }
     
 }
