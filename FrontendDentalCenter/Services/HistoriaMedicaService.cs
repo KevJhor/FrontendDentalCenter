@@ -17,5 +17,18 @@ namespace FrontendDentalCenter.Services
             return historiaMed;
         }
 
+        public static async Task<IEnumerable<HistoriaMedicaViewModel>> GetHistoriaMedicaIdCab(int id)
+        {
+            var url = "http://localhost:5010/api/HistorialMedico/CabHistoria/Id?id=2" + id;
+
+            using var htppClient = new HttpClient();
+            using var response = await htppClient.GetAsync(url);
+            var apiResponse = await response.Content.ReadAsStringAsync();
+            var historiaMed = JsonConvert.DeserializeObject<IEnumerable<HistoriaMedicaViewModel>>(apiResponse);
+            return historiaMed;
+        }
+
+        
+
     }
 }

@@ -1,0 +1,41 @@
+﻿@using FrontendDentalCenter.Areas.Medico.Models
+@using FrontendDentalCenter.Models
+@using FrontendDentalCenter.ViewModels
+@{
+    var Historia = ViewBag.HistoriaList as List<HistoriaMedicaViewModel>;
+    var cabHistoia = ViewBag.CabHistoriaList as List<CabHistoriaMedicaViewModel>;
+    var medicos = ViewBag.MedicoList as List<MedicoViewModel>;
+    var Nombre = ViewBag.Nombres as string;
+    var Apellido = ViewBag.Apellidos as string;
+    var ListHistoriaMedica = ViewBag.ListHistoriaMed as List<HistoriaMedicaViewModel>;
+
+}
+<H2>Paciente @Nombre @Apellido</H2>
+<table class="table table-striped" id="tbListadoHistoria">
+    <thead>
+        <tr>
+            <th>Nombre del medico</th>
+            <th>Apellido del medico</th>
+            <th>Id receta</th>
+            <th>Id tratamiento</th>
+            <th>Id historía médica</th>
+            <th>Fecha de la cita</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @for (int i = 0; i < Historia.Count(); i++)
+        {
+            <tr>
+                <td>@medicos[i].Nombre</td>
+                <td>@medicos[i].Apellido</td>
+                <td>@Historia[i].IdRecetaMedica</td>
+                <td>@Historia[i].IdTratamiento</td>
+                <td>@Historia[i].IdHistoriaMedica</td>
+                <td>@cabHistoia[i].FechaDeActualizacion</td>
+                
+            </tr>
+        }
+    </tbody>
+</table>

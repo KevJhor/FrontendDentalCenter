@@ -56,21 +56,46 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
 
         }
        
-        public async Task<IActionResult> ListaHistoriaMedicaByPaciente(int id,string Nombre, string Apellido)
+        /*public async Task<IActionResult> ListaHistoriaMedicaByPaciente(int id,string Nombre, string Apellido)
         {
-            var Historia = await MedicoService.GetHistoriaMedicaByIdPaciente(1);
+            var Historia = await MedicoService.GetHistoriaMedicaByIdPaciente(id);
             List<CabHistoriaMedicaViewModel> cabHistoria = new List<CabHistoriaMedicaViewModel>();
             List<MedicoViewModel> medicos = new List<MedicoViewModel>();
+            //List<HistoriaMedicaViewModel> historiaMed = new List<HistoriaMedicaViewModel>();
+            
             foreach(var item in Historia)
             {
                 cabHistoria.AddRange(await MedicoService.GetCabHistoriaMedicabyId(item.IdHistoriaMedica));
                 medicos.Add(await MedicoService.GetMedicosbyId(item.IdMedico));
+                //historiaMed.AddRange(await HistoriaMedicaService.GetHistoriaMedicaIdCab(item.IdHistoriaMedica));
             }
             ViewBag.HistoriaList = Historia;
             ViewBag.CabHistoriaList = cabHistoria;
             ViewBag.MedicoList = medicos;
             ViewBag.Nombres = Nombre;
             ViewBag.Apellidos = Apellido;
+            //ViewBag.ListHistoriaMed = historiaMed;
+            return View();
+        }*/
+        public async Task<IActionResult> ListaHistoriaMedica(int id, string Nombre, string Apellido)
+        {
+            var Historia = await MedicoService.GetHistoriaMedicaByIdPaciente(id);
+            List<CabHistoriaMedicaViewModel> cabHistoria = new List<CabHistoriaMedicaViewModel>();
+            List<MedicoViewModel> medicos = new List<MedicoViewModel>();
+            //List<HistoriaMedicaViewModel> historiaMed = new List<HistoriaMedicaViewModel>();
+
+            foreach (var item in Historia)
+            {
+                cabHistoria.AddRange(await MedicoService.GetCabHistoriaMedicabyId(item.IdHistoriaMedica));
+                medicos.Add(await MedicoService.GetMedicosbyId(item.IdMedico));
+                //historiaMed.AddRange(await HistoriaMedicaService.GetHistoriaMedicaIdCab(item.IdHistoriaMedica));
+            }
+            ViewBag.HistoriaList = Historia;
+            ViewBag.CabHistoriaList = cabHistoria;
+            ViewBag.MedicoList = medicos;
+            ViewBag.Nombres = Nombre;
+            ViewBag.Apellidos = Apellido;
+            //ViewBag.ListHistoriaMed = historiaMed;
             return View();
         }
 
