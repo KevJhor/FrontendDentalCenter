@@ -4,14 +4,15 @@
 @{
     var pacientes = ViewBag.pacienteList as IEnumerable<PacienteViewModel>;
     var Medico = ViewBag.Medico as MedicoViewModel;
+    var citas = ViewBag.citaList as IEnumerable<CitaViewModel>;
 }
-
-
-
 
 <table class="table table-striped" id="tbListadoHistoriaMedica">
     <thead>
         <tr>
+            <th>Id Cita</th>
+            <th>Estado</th>
+            <th>Fecha y Hora</th>
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Dni</th>
@@ -21,17 +22,22 @@
     <tbody>
         @foreach (var item in pacientes)
         {
-            <tr>
-                <td>@item.Nombre</td>
-                <td>@item.Apellido</td>
-                <td>@item.Dni</td>
-                <td>
-                    <a href="@Url.Action("ListaHistoriaMedica","Medico",new{ id=item.IdPaciente, Nombre=item.Nombre,Apellido=@item.Apellido})" class="btn btn-success">Ver Historial</a>
-                    <a href="@Url.Action("RegistrarHistoria", "HistoriaMedica" , new { Nombre=item.Nombre,Correo =@item.Correo ,Apellido=@item.Apellido, Telefono=@item.Telefono, Dni=@item.Dni, NombreM =Medico.Nombre, ApellidoM = Medico.Apellido})" class="btn btn-success">Registrar Historial</a>
- 
-                    
-                </td>
-            </tr>
+            @foreach (var item2 in citas)
+            {
+                <tr>
+                    <td>@item2.IdCita</td>
+                    <td>@item2.Estado</td>
+                    <td>@item2.FechaHora</td>
+                    <td>@item.Nombre</td>
+                    <td>@item.Apellido</td>
+                    <td>@item.Dni</td>
+                    <td>
+                        <a href="@Url.Action("ListaHistoriaMedica","Medico",new{ id=item.IdPaciente, Nombre=item.Nombre,Apellido=@item.Apellido})" class="btn btn-success">Ver Historial</a>
+                        <a href="@Url.Action("RegistrarHistoria", "HistoriaMedica" , new { Nombre=item.Nombre,Correo =@item.Correo ,Apellido=@item.Apellido, Telefono=@item.Telefono, Dni=@item.Dni, NombreM =Medico.Nombre, ApellidoM = Medico.Apellido})" class="btn btn-success">Registrar Historial</a>
+                    </td>
+                </tr>
+        
+            }
         }
     </tbody>
 </table>
@@ -46,4 +52,3 @@
     }
 
 </style>
-

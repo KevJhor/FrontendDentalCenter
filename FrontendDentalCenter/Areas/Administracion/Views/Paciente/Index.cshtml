@@ -146,6 +146,7 @@
         let vCorreo = $("#txtCorreo").val()
         let vFrecuente = $("#txtFrecuente").val()
         var myModal = new bootstrap.Modal(document.getElementById('modalRegistroPaciente'))
+        
         $.ajax({
             type: "POST",
             url: '@Url.Action("Guardar","Paciente", new{Area="Administracion"})',

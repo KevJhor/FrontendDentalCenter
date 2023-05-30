@@ -15,5 +15,15 @@ namespace FrontendDentalCenter.Services
             var cita = JsonConvert.DeserializeObject<IEnumerable<CitaViewModel>>(apiResponse);
             return cita;
         }
+        public static async Task<IEnumerable<CitaViewModel>> GetCitaByPacienteId(int id)
+        {
+            var url = "http://localhost:5010/api/Cita/CitaByPacienteId?id=" + id;
+
+            using var htppClient = new HttpClient();
+            using var response = await htppClient.GetAsync(url);
+            var apiResponse = await response.Content.ReadAsStringAsync();
+            var cita = JsonConvert.DeserializeObject<IEnumerable<CitaViewModel>>(apiResponse);
+            return cita;
+        }
     }
 }

@@ -1,7 +1,10 @@
 ﻿@using FrontendDentalCenter.Areas.Paciente.Models
+@using FrontendDentalCenter.ViewModels
 
 @{
+    var medico = ViewBag.MedicoList as IEnumerable<MedicoViewModelPost>;
     var especialidad = ViewBag.EspecialidadList as IEnumerable<EspecialidadViewModel>;
+    
 }
 
 <div class="alert alert-primary">
@@ -57,9 +60,11 @@
                         <div class="form-floating">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                                 <option selected></option>
-                                <option value="1">Matias</option>
-                                <option value="2">José</option>
-                                <option value="3">Valeria</option>
+                                @foreach (var item in especialidad)
+                                {
+                                    <option>@item.Descripcion</option>
+                                }
+                                
                             </select>
                             <label for="floatingSelect">Seleccione</label>
                         </div>
@@ -110,14 +115,6 @@
                                     </label>
    
                                 </fieldset>
-                                <div class="dialog-ok-cancel-group">
-                                    <button class="dialog-button" value="cancel">
-                                        Cancel
-                                    </button>
-                                    <button class="dialog-button" value="ok">
-                                        OK
-                                    </button>
-                                </div>
                                 <div class="dialog-message" aria-live="polite"></div>
                             </div>
                         </div>

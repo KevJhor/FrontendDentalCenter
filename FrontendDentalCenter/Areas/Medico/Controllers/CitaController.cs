@@ -30,17 +30,15 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
                 {
                     ids.Add((int)item.IdPaciente);
                 }
-                
             }
             List<int> idDistic = ids.Distinct().ToList();
 
             foreach (var item in idDistic)
             {
                 pacientes.Add((PacienteViewModel)await PacienteService.GetPacientesbyId(item));
-                
-
             }
 
+            ViewBag.citaList = citas;
             ViewBag.pacienteList = pacientes;
             ViewBag.Medico = Medico;
             
