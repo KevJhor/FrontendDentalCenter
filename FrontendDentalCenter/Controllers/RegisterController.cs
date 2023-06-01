@@ -6,9 +6,7 @@ namespace FrontendDentalCenter.Controllers
 {
     public class RegisterController : Controller
     {
-        public async Task<IActionResult> Guardar(string nombre, string apellido,
-                                         string correo, int DNI, string telefono
-                                         )
+        public async Task<IActionResult> Guardar(string nombre, string apellido,string correo, int DNI, string telefono)
         {
             bool exito = true;
             var objPaciente = new PacienteViewModelPost2()
@@ -26,8 +24,8 @@ namespace FrontendDentalCenter.Controllers
         public async Task<IActionResult> GuardarUsuario(string correo, string contraseña)
         {
             bool exito = true;
-            var idPac = PacienteService.GetPacientesbyCorreo(correo);
-            var idPaciente = idPac.Id;
+            var idPac = await PacienteService.GetPacientesbyCorreo(correo);
+            var idPaciente = idPac.IdPaciente;
             var objLogin = new LoginPacientePostViewModel()
             {
                 Usuario = correo,

@@ -1,6 +1,7 @@
 ﻿using FrontendDentalCenter.Models;
 using FrontendDentalCenter.ViewModels;
 using Newtonsoft.Json;
+using System.Drawing.Printing;
 using System.Text;
 
 namespace FrontendDentalCenter.Services
@@ -32,8 +33,10 @@ namespace FrontendDentalCenter.Services
             using var response = await htppClient.GetAsync(url);
             var apiResponse = await response.Content.ReadAsStringAsync();
             var pacientes = JsonConvert.DeserializeObject<PacienteViewModelPost2>(apiResponse);
+            int a = pacientes.IdPaciente;
             return pacientes;
         }
+
         public static async Task<bool> InsertPaciente(PacienteViewModelPost paciente)
         {
             var url = "http://localhost:5010/api/Paciente";

@@ -33,30 +33,30 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <input required type="text" name="txtNombre" class="form-control" placeholder="Nombre">
+                                <input required type="text" id="txtNombre" class="form-control" placeholder="Nombre">
                             </div>
                             <div class="col-md-6 mb-3">
-                                <input required type="text" name="txtApellido" class="form-control" placeholder="Apellidos">
+                                <input required type="text" id="txtApellido" class="form-control" placeholder="Apellido">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 mb-3">
-                                <input required type="text" name="txtCorreo" class="form-control" aria-describedby="emailHelp" placeholder="Dirección email">
+                                <input required type="text" id="txtCorreo" class="form-control" aria-describedby="emailHelp" placeholder="Dirección email">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 mb-3">
-                                <input required type="text" name="txtDNI" class="form-control" placeholder="DNI">
+                                <input required type="text" id="txtDNI" class="form-control" placeholder="DNI">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <input required type="text" name="txtTelefono" class="form-control" placeholder="Teléfono de contacto">
+                                <input required type="text" id="txtTelefono" class="form-control" placeholder="Teléfono de contacto">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 mb-3">
-                                <input required type="text" name="txtContraseña" class="form-control" placeholder="Contraseña">
+                                <input required type="text" id="txtContraseña" class="form-control" placeholder="Contraseña">
                             </div>
                         </div>
 
@@ -66,7 +66,7 @@
                         </div>
                         <div class="d-grid gap-2">
                             ¿Ya tienes un usuario?
-                            <button type="button" class="btn btn-success" onclick="window.location.href='@Url.Action("Login","Security")';">Iniciar Sesión</button>
+                        <button type="button" id="btn-success" class="btn btn-success" onclick="window.location.href='@Url.Action("Login","Security")';">Iniciar Sesión</button>
                         </div>
                     </div>
                 </div>
@@ -96,29 +96,29 @@
             },
             success: function (valorRespuesta) {
                 if (valorRespuesta) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GuardarUsuario","Register", new{Area=""})',
+                        Cache: false,
+                        data: {
+                            correo: vCorreo,
+                            contraseña: vContraseña
+                        },
+                        success: function (valorRespuesta) {
+                            if (valorRespuesta) {
+                                alert("Se registró correctamente!");
+                            } else {
+                                alert("Ocurrió un error al registrar el Usuario!");
+                            }
+                        }
+                    });
                     alert("Se registró correctamente!");
                 } else {
                     alert("Ocurrió un error al registrar el Paciente!");
                 }
             }
         });
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("GuardarUsuario","Register", new{Area=""})',
-            Cache: false,
-            data: {
-                nombre: vNombre,
-                correo: vCorreo,
-                contraseña: vContraseña
-            },
-            success: function (valorRespuesta) {
-                if (valorRespuesta) {
-                    alert("Se registró correctamente!");
-                } else {
-                    alert("Ocurrió un error al registrar el Usuario!");
-                }
-            }
-        });
+        
     });
 
 </script>
@@ -126,7 +126,9 @@
     #form-login {
         margin-top: 10%;
     }
-
+    #form-register {
+        margin-top: 8%;
+    }
     #div-login {
         display: flex;
         align-items: center;
