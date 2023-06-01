@@ -78,7 +78,7 @@ namespace FrontendDentalCenter.Controllers
             {
                 if (auth.Tipo == "Medico")
                 {
-                    
+                    TempData["MiVariable"] = getIdMedico();
                     return RedirectToAction("Index", "Medico", new { Area = "Medico", idM = getIdMedico() });
                 }
                 else if (auth.Tipo == "Paciente")

@@ -12,19 +12,42 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
     [Area("Medico")]
     public class MedicoController : Controller
     {
-       
+
         //private int idMedico;
         /*public MedicoController(int id)
         {
             idMedico = id;
             
         }*/
-        
+        private int _miVariable;
+        public int MiVariable
+        {
+            get { return _miVariable; }
+            set { _miVariable = value; }
+        }
+        public IActionResult X()
+        {
+            _miVariable = (int)TempData["MiVariable"];
+            return View();
+        }
+        private int _id;
+        public int id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
         
         public async Task<IActionResult> Index(int idM)
         {
-            //ViewBag.idMedico = idM;
+            if (idM!=0)
+            {
+                _id = idM;
+            }
             var Medico = await MedicoService.GetMedicosbyId(idM);
+            if (idM == 0)
+            {
+                Medico = await MedicoService.GetMedicosbyId(id);
+            }
             ViewBag.Medico = Medico;
             return View();
         }
