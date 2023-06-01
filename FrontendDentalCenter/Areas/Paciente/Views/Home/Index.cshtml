@@ -16,6 +16,9 @@
 
 <div class="container2 col-md-3" id="caja">
     <div class="mb-3 row">
+        <a href="@Url.Action("RegistroCita","Cita",new{ Area = "Paciente", idP=Paciente.IdPaciente}) " button class="btn">Nueva Cita</a>
+    </div>
+    <div class="mb-3 row">
         <a href="@Url.Action("TablaCitasPorPaciente","Cita",new{ Area = "Paciente", idP=Paciente.IdPaciente}) " button class="btn">Ver mis Citas</a>
     </div>
     <div class="mb-3 row">

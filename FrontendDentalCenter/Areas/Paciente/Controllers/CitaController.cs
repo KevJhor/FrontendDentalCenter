@@ -19,7 +19,16 @@ namespace FrontendDentalCenter.Areas.Paciente.Controllers
             ViewBag.MedicoList = medico;
             return View();
         }
-
+        public async Task<IActionResult> RegistroCita(int idP)
+        {
+            var Paciente = await PacienteService.GetPacientesbyId(idP);
+            ViewBag.Paciente = Paciente;
+            var Medico = await MedicoService.GetMedicos();
+            ViewBag.MedicoList = Medico;
+            var Especialidad = await EspecialidadService.GetEspecialidades();
+            ViewBag.Especialidades = Especialidad;
+            return View();
+        }
         public async Task<IActionResult> Listado()
         {
             var pacientes = await PacienteService.GetPacientes();
