@@ -1,14 +1,16 @@
 ﻿using FrontendDentalCenter.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.Intrinsics.Arm;
 
 namespace FrontendDentalCenter.Areas.Paciente.Controllers
 {
     [Area("Paciente")]
     public class CitaController : Controller
     {
-        int idPaciente = 0;
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int idP)
         {
+            var Paciente = await PacienteService.GetPacientesbyId(idP);
+            ViewBag.Paciente = Paciente;
             var especialidad = await EspecialidadService.GetEspecialidades();
             ViewBag.EspecialidadList = especialidad;
             var medico = await MedicoService.GetMedicos();
@@ -26,12 +28,6 @@ namespace FrontendDentalCenter.Areas.Paciente.Controllers
         {
             var especialidad = await EspecialidadService.GetEspecialidades();
             ViewBag.EspecialidadList = especialidad;
-            return View();
-        }
-        public async Task<IActionResult> ListaCita()
-        {
-            var cita = await CitaServices.GetCitaByPacienteId(idPaciente);
-            ViewBag.CitaList = cita;
             return View();
         }
     }

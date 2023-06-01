@@ -20,7 +20,7 @@
         <a href="@Url.Action("Cita","Listado",new{ idCita=Paciente.IdPaciente})" button class="btn" role="button">Consultar </a>
     </div>
     <div class="mb-3 row">
-        <a href="http://localhost:5181/Paciente/Cita " button class="btn">Manejar Citas</a>
+        <a href="@Url.Action("Index","Cita",new{ Area = "Paciente", idP=Paciente.IdPaciente}) " button class="btn">Manejar Citas</a>
     </div>
 </div>
 

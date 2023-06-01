@@ -4,7 +4,8 @@
 @{
     var medico = ViewBag.MedicoList as IEnumerable<MedicoViewModelPost>;
     var especialidad = ViewBag.EspecialidadList as IEnumerable<EspecialidadViewModel>;
-    
+    var paciente = ViewBag.Paciente as PacienteViewModel;
+
 }
 
 <div class="alert alert-primary">
@@ -16,10 +17,10 @@
             <button id="btnAgregarCita" class="btn btn-success">
                 Agregar
             </button>
+            <a href="@Url.Action("Index","Home",new {idP = paciente.IdPaciente})" id="retorno" button class="btn btn-dark" role="button">Retornar</a>
         </div>
     </div>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="modalRegistroCita" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -156,6 +157,11 @@
 <style>
      body {
         font-family: arial narrow;
+    }
+    #retorno{
+        position: fixed;
+        right: 15px;
+        bottom: 15px;
     }
 </style>
 
