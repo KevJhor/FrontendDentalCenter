@@ -1,6 +1,6 @@
 ﻿namespace FrontendDentalCenter.Areas.Paciente.Models
 {
-    public class CitaViewModel
+    public class PacienteCitaViewModel
     {
         public int IdCita { get; set; }
         public int? IdPaciente { get; set; }

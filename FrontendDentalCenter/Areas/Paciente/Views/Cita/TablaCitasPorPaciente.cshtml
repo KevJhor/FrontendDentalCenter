@@ -1,0 +1,94 @@
+﻿@using FrontendDentalCenter.Areas.Medico.Models;
+@using FrontendDentalCenter.Areas.Paciente.Models;
+@using FrontendDentalCenter.ViewModels
+
+@{
+    var paciente = ViewBag.Paciente;
+    var citas = ViewBag.CitasLista as IEnumerable<CitaViewModel>;
+    var medicos = ViewBag.Medicos as IEnumerable<MedicoViewModel>;
+}
+<a href="@Url.Action("Index","Home",new {idP = paciente})" id="retorno" button class="btn btn-dark" role="button">Retornar</a>
+<table class="table table-striped" id="tbListadoCitas">
+    <thead>
+        <tr>
+            <th>Id Cita</th>
+            <th>Id Paciente</th>
+            <th>Id Médico</th>
+            <th>Medico</th>
+            <th>Estado</th>
+            <th>Fecha y Hora</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in citas)
+        {
+            <tr>
+                <td>@item.IdCita</td>
+                <td>@item.IdPaciente</td>
+                <td>@item.IdMedico</td>
+                @foreach(var item1 in medicos)
+                {
+                    if (item1.IdMedico == item.IdMedico)
+                    {
+                        <td>@item1.Nombre @item1.Apellido</td>
+                    }
+                }
+                <td>@item.Estado</td>
+                <td>@item.FechaHora</td>
+                <td>
+                    <button id="cancelar" class="btn btn-danger btnEliminarCliente">Cancelar</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    loadDatatable();
+    function loadDatatable() {
+        $('#tbListadoCitas').DataTable();
+    }
+    $("#cancelar").click(function () {
+        var fila = $(this).closest('tr');
+        var columnas = fila.find('td');
+        let vIdCita = columnas.eq(0).text();
+        let vIdPaciente = columnas.eq(1).text();
+        let vIdMedico = columnas.eq(2).text();
+        let vEstado = "Cancelada";
+        let vFechaHora = columnas.eq(5).text();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GuardarCita","Cita", new{Area="Paciente"})',
+            Cache: false,
+            data: {
+                idCita: vIdCita,
+                idPaciente: vIdPaciente,
+                idMedico: vIdMedico,
+                estado: vEstado,
+                fechaHora: vFechaHora
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    alert("Se canceló correctamente!");
+                    location.reload();
+                } else {
+                    alert("Ocurrió un error al registrar el Tratamiento!");
+                }
+            }
+        });
+
+    });
+</script>
+<style>
+    body {
+        font-family: arial narrow;
+    }
+
+    #retorno {
+        position: fixed;
+        right: 15px;
+        bottom: 15px;
+    }
+</style>

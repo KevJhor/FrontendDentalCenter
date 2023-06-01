@@ -1,5 +1,7 @@
 ﻿using FrontendDentalCenter.Areas.Medico.Models;
+using FrontendDentalCenter.ViewModels;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace FrontendDentalCenter.Services
 {
@@ -24,6 +26,18 @@ namespace FrontendDentalCenter.Services
             var apiResponse = await response.Content.ReadAsStringAsync();
             var cita = JsonConvert.DeserializeObject<IEnumerable<CitaViewModel>>(apiResponse);
             return cita;
+        }
+        public static async Task<bool> UpdateCita(CitaViewModel cita)
+        {
+            var url = "http://localhost:5010/api/Cita/" + cita.IdCita;
+            var json = JsonConvert.SerializeObject(cita);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            using var htppClient = new HttpClient();
+            using var response = await htppClient.PutAsync(url, data);
+            var apiResponse = await response.Content.ReadAsStringAsync();
+            var citaResponse = JsonConvert.DeserializeObject<bool>(apiResponse);
+            return citaResponse;
         }
     }
 }
