@@ -24,13 +24,20 @@ namespace FrontendDentalCenter.Controllers
         public async Task<IActionResult> GuardarUsuario(string correo, string contraseña)
         {
             bool exito = true;
-            var idPac = await PacienteService.GetPacientesbyCorreo(correo);
-            var idPaciente = idPac.IdPaciente;
+
+            var todoPaciente = await PacienteService.GetPacientes();
+            List<int> idPacientes = new List<int>();
+            foreach (var item in todoPaciente)
+            {
+                idPacientes.Add((int)item.IdPaciente);
+            }
+            int idPac = idPacientes.Last();
+
             var objLogin = new LoginPacientePostViewModel()
             {
                 Usuario = correo,
                 Contraseña = contraseña,
-                IdPaciente = idPaciente,
+                IdPaciente = idPac,
                 Tipo = "Paciente"
             };
             exito = await LoginService.InsertLogin(objLogin);

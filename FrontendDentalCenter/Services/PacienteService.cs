@@ -32,8 +32,7 @@ namespace FrontendDentalCenter.Services
             using var htppClient = new HttpClient();
             using var response = await htppClient.GetAsync(url);
             var apiResponse = await response.Content.ReadAsStringAsync();
-            var pacientes = JsonConvert.DeserializeObject<PacienteViewModelPost2>(apiResponse);
-            int a = pacientes.IdPaciente;
+            PacienteViewModelPost2? pacientes = JsonConvert.DeserializeObject<PacienteViewModelPost2>(apiResponse);
             return pacientes;
         }
 
