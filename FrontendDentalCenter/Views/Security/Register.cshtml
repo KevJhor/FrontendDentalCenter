@@ -107,12 +107,12 @@
                         success: function (valorRespuesta) {
                             if (valorRespuesta) {
                                 alert("Se registró correctamente!");
+                                window.location = "http://localhost:5181/Security/Login";
                             } else {
                                 alert("Ocurrió un error al registrar el Usuario!");
                             }
                         }
                     });
-                    alert("Se registró correctamente!");
                 } else {
                     alert("Ocurrió un error al registrar el Paciente!");
                 }

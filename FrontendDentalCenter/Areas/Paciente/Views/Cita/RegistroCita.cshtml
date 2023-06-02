@@ -127,6 +127,7 @@
             success: function (valorRespuesta) {
                 if (valorRespuesta) {
                     alert("Se registró la cita correctamente!");
+                    window.location = "http://localhost:5181/Paciente?idP="+vIdPaciente;
                 } else {
                     alert("Ocurrió un error al registrar la Cita!");
                 }
