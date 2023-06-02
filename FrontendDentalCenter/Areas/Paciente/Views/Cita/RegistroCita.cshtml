@@ -5,6 +5,7 @@
     var medico = ViewBag.MedicoList as IEnumerable<MedicoViewModel>;
     var especialidad = ViewBag.Especialidades as IEnumerable<EspecialidadViewModel>;
 }
+
 <div id="imagen">
     <img src="https://i.imgur.com/yEVJxai.png" width="360" height="500" />
 </div>
@@ -14,7 +15,7 @@
             <lable>Seleccione Especialidad</lable>
         </div>
         <div class="custom-select">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <select class="form-select" id="selectEspecialidad" aria-label="Floating label select example">
                 <option selected></option>
                 @foreach (var item in especialidad)
                 {
@@ -27,7 +28,7 @@
             <lable>Seleccione Doctor</lable>
         </div>
         <div class="custom-select">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+            <select class="form-select" id="selectMedico" aria-label="Floating label select example">
                 <option selected></option>
                 @foreach (var item in medico)
                 {
@@ -81,12 +82,9 @@
         </fieldset>
         <label></label>
         <div>
-            <button class="btn btn-success">Generar Cita
-                
+            <button class="btn btn-success" id="btnGenerarCita">Generar Cita
             </button>
-            <button class="btn btn-danger">Cancelar
-
-            </button>
+            <a id="retorno" href="@Url.Action("Index","Home",new {idP = paciente.IdPaciente })" button class="btn btn-danger" role="button">Cancelar</a>
         </div>
     </div>
 </div>
@@ -96,7 +94,7 @@
     }
     #imagen{
         position: absolute;
-        right: 11%;
+        right: 15%;
         top: 12%;
     }
     #contenedor{
@@ -105,3 +103,33 @@
         top: 12%;
     }
 </style>
+<script>
+    $("#btnGenerarCita").click(function () {
+        let vIdPaciente = @paciente.IdPaciente
+        let vEspecialidad = $('#selectEspecialidad').val();
+        let vNombreMedico = $("#selectMedico").val()
+        let vEstado = "Activa"
+        let vFecha = $("#txtFecha").val() + $("#txtHora").val()
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CrearCita","Cita", new{Area="Paciente"})',@*falta hacer el método en el controller*@
+            Cache: false,
+            data: {
+                idPaciente: vIdPaciente,
+                especialidad: vEspecialidad,
+                nombreMedico: vNombreMedico,
+                Estado: vEstado,
+                FechaHora: vFecha
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    alert("Se registró la cita correctamente!");
+                    @Url.Action("Index","Home",new {idP = paciente.IdPaciente })
+                } else {
+                    alert("Ocurrió un error al registrar la Cita!");
+                }
+            }
+        });
+    });
+
+</script>

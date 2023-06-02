@@ -1,4 +1,5 @@
 ﻿using FrontendDentalCenter.Areas.Medico.Models;
+using FrontendDentalCenter.Areas.Paciente.Models;
 using FrontendDentalCenter.ViewModels;
 using Newtonsoft.Json;
 using System.Text;
@@ -35,6 +36,18 @@ namespace FrontendDentalCenter.Services
 
             using var htppClient = new HttpClient();
             using var response = await htppClient.PutAsync(url, data);
+            var apiResponse = await response.Content.ReadAsStringAsync();
+            var citaResponse = JsonConvert.DeserializeObject<bool>(apiResponse);
+            return citaResponse;
+        }
+        public static async Task<bool> InsertCita(PacienteCitaViewModelPost cita)
+        {
+            var url = "http://localhost:5010/api/Cita";
+            var json = JsonConvert.SerializeObject(cita);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            using var htppClient = new HttpClient();
+            using var response = await htppClient.PostAsync(url, data);
             var apiResponse = await response.Content.ReadAsStringAsync();
             var citaResponse = JsonConvert.DeserializeObject<bool>(apiResponse);
             return citaResponse;

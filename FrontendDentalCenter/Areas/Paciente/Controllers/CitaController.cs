@@ -3,6 +3,7 @@ using FrontendDentalCenter.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Runtime.Intrinsics.Arm;
 using FrontendDentalCenter.Areas.Medico.Models;
+using FrontendDentalCenter.Areas.Paciente.Models;
 
 namespace FrontendDentalCenter.Areas.Paciente.Controllers
 {
@@ -63,6 +64,29 @@ namespace FrontendDentalCenter.Areas.Paciente.Controllers
                 FechaHora = fechaHora
             };
             exito = await CitaServices.UpdateCita(objCita);
+            return Json(exito);
+        }
+        public async Task<IActionResult> CrearCita(int idCita, int idPaciente,
+                                                string nombreMedico, string estado, DateTime fechaHora)
+        {
+            bool exito = true;
+            int idMedico=0;
+            var medicos = await MedicoService.GetMedicos();
+            foreach(var item in medicos)
+            {
+                if(item.Nombre + item.Apellido == nombreMedico)
+                {
+                    idMedico = item.IdMedico;
+                }
+            }
+            var objCita = new PacienteCitaViewModelPost()
+            {
+                IdPaciente = idPaciente,
+                IdMedico = idMedico,
+                Estado = estado,
+                FechaHora = fechaHora//lo recibe en dos partes
+            };
+            exito = await CitaServices.InsertCita(objCita);
             return Json(exito);
         }
     }
