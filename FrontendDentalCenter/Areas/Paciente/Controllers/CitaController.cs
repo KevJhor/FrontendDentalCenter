@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Runtime.Intrinsics.Arm;
 using FrontendDentalCenter.Areas.Medico.Models;
 using FrontendDentalCenter.Areas.Paciente.Models;
+using System.Globalization;
 
 namespace FrontendDentalCenter.Areas.Paciente.Controllers
 {
@@ -67,14 +68,21 @@ namespace FrontendDentalCenter.Areas.Paciente.Controllers
             return Json(exito);
         }
         public async Task<IActionResult> CrearCita(int idCita, int idPaciente,
-                                                string nombreMedico, string estado, DateTime fechaHora)
+                                                string nombreMedico, string estado, string fecha, string hora)
         {
             bool exito = true;
             int idMedico=0;
+            string compuesto = "";
+            string? fechaYhora = "";
+            fechaYhora = fecha + ' ' + hora;
+            string formato = "yyyy-MM-dd HH:mm";
+            DateTime fechaCita;
+            DateTime.TryParseExact(fechaYhora, formato, CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaCita);
             var medicos = await MedicoService.GetMedicos();
             foreach(var item in medicos)
             {
-                if(item.Nombre + item.Apellido == nombreMedico)
+                compuesto = item.Nombre + ' ' +item.Apellido;
+                if(compuesto == nombreMedico)
                 {
                     idMedico = item.IdMedico;
                 }
@@ -84,7 +92,7 @@ namespace FrontendDentalCenter.Areas.Paciente.Controllers
                 IdPaciente = idPaciente,
                 IdMedico = idMedico,
                 Estado = estado,
-                FechaHora = fechaHora//lo recibe en dos partes
+                FechaHora = fechaCita//lo recibe en dos partes
             };
             exito = await CitaServices.InsertCita(objCita);
             return Json(exito);

@@ -82,7 +82,8 @@
         </fieldset>
         <label></label>
         <div>
-            <button class="btn btn-success" id="btnGenerarCita">Generar Cita
+            <button class="btn btn-success" type="submit" id="btnGenerarCita">
+                Generar Cita
             </button>
             <a id="retorno" href="@Url.Action("Index","Home",new {idP = paciente.IdPaciente })" button class="btn btn-danger" role="button">Cancelar</a>
         </div>
@@ -109,22 +110,23 @@
         let vEspecialidad = $('#selectEspecialidad').val();
         let vNombreMedico = $("#selectMedico").val()
         let vEstado = "Activa"
-        let vFecha = $("#txtFecha").val() + $("#txtHora").val()
+        let vFecha = $("#txtFecha").val()
+        let vHora = $("#txtHora").val()
         $.ajax({
             type: "POST",
-            url: '@Url.Action("CrearCita","Cita", new{Area="Paciente"})',@*falta hacer el método en el controller*@
+            url: '@Url.Action("CrearCita","Cita", new{Area="Paciente"})',
             Cache: false,
             data: {
                 idPaciente: vIdPaciente,
                 especialidad: vEspecialidad,
                 nombreMedico: vNombreMedico,
-                Estado: vEstado,
-                FechaHora: vFecha
+                estado: vEstado,
+                fecha: vFecha,
+                hora: vHora,
             },
             success: function (valorRespuesta) {
                 if (valorRespuesta) {
                     alert("Se registró la cita correctamente!");
-                    @Url.Action("Index","Home",new {idP = paciente.IdPaciente })
                 } else {
                     alert("Ocurrió un error al registrar la Cita!");
                 }
