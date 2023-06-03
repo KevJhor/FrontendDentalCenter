@@ -43,5 +43,6 @@ namespace FrontendDentalCenter.Controllers
             exito = await LoginService.InsertLogin(objLogin);
             return Json(exito);
         }
+
     }
 }

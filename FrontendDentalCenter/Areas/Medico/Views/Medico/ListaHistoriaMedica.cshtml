@@ -207,8 +207,9 @@
                 if (valorRespuesta) {
                     alert("Se registró la receta correctamente!");
                     var fila = $("#tbListaMedicamentos").first('tr');
-                    var columnas = fila.find('td');
-                    for (var i in Range(columnas)) {
+                    
+                    for (var i in fila) {
+                        var columnas = fila.find('td');
                         let vMedicamento = columnas.eq(0).text();
                         let vDosis = columnas.eq(1).text();
                         let vUnidad = columnas.eq(2).text();
