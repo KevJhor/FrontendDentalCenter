@@ -49,7 +49,7 @@
     loadDatatable();
     function loadDatatable() {
         $('#tbListadoCitas').DataTable();
-    }
+    };
     $(".btnEliminarCliente").click(function () {@*recordar que el id solo aplica a 1 y un class aplica a todos los que se identifiquen*@
         var fila = $(this).closest('tr');
         var columnas = fila.find('td');
@@ -71,7 +71,7 @@
             },
             success: function (valorRespuesta) {
                 if (valorRespuesta) {
-                    alert("Se canceló correctamente!");
+                    alert("Se canceló correctamente la cita!");
                     location.reload();
                 } else {
                     alert("Ocurrió un error al registrar el Tratamiento!");

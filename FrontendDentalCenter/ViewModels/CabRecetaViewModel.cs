@@ -30,6 +30,13 @@
         public string? UnidadMedida { get; set; }
         public string? Descripcion { get; set; }
     }
+    public class ValoresTablaMedicamentoViewModel
+    {
+        public string? Medicamento { get; set; }
+        public string? Dosis { get; set; }
+        public string? UnidadMedida { get; set; }
+        public string? Descripcion { get; set; }
+    }
 
 
 }

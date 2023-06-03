@@ -8,34 +8,262 @@
     var Nombre = ViewBag.Nombres as string;
     var Apellido = ViewBag.Apellidos as string;
     var ListHistoriaMedica = ViewBag.ListHistoriaMed as List<HistoriaMedicaViewModel>;
-
+    var tratamiento = ViewBag.Tratamiento as IEnumerable<TratamientoViewModel>;
+    var medicamento = ViewBag.Medicamento as IEnumerable<MedicamentoViewModel>;
 }
 <H2>Paciente @Nombre @Apellido</H2>
-<table class="table table-striped" id="tbListadoHistoria">
-    <thead>
-        <tr>
-            <th>Nombre del medico</th>
-            <th>Apellido del medico</th>
-            <th>Id receta</th>
-            <th>Id tratamiento</th>
-            <th>Id historía médica</th>
-            <th>Fecha de la cita</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-
-        @for (int i = 0; i < Historia.Count(); i++)
-        {
+<div class="containerTable">
+    <table class="table table-striped" id="tbListadoHistoria">
+        <thead>
             <tr>
-                <td>@medicos[i].Nombre</td>
-                <td>@medicos[i].Apellido</td>
-                <td>@Historia[i].IdRecetaMedica</td>
-                <td>@Historia[i].IdTratamiento</td>
-                <td>@Historia[i].IdHistoriaMedica</td>
-                <td>@cabHistoia[i].FechaDeActualizacion</td>
-                
+                <th>Id historía médica</th>
+                <th>Nombre del medico</th>
+                <th>Apellido del medico</th>
+                <th>Id receta</th>
+                <th>Id tratamiento</th>
+                <th>Fecha de la cita</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Historia.Count(); i++)
+            {
+                <tr>
+                    <td>@Historia[i].IdHistoriaMedica</td>
+                    <td>@medicos[i].Nombre</td>
+                    <td>@medicos[i].Apellido</td>
+                    <td>@Historia[i].IdRecetaMedica</td>
+                    <td>@Historia[i].IdTratamiento</td>
+                    <td>@cabHistoia[i].FechaDeActualizacion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div style="border: 2px double lightblue;" id="Det_Historia" class="rounded">
+        <div style="border: 2px double #32bfc9; margin: 10px;" class="rounded">
+            <div style="margin: 10px;" name="Receta" class="Receta">
+                 <h3>RECETA</h3>
+                 <div class="col-md-8">
+                     <div class="form-group">
+                         <label>Fecha</label>
+                         <input type="text" class="form-control" id="txtFecha" readonly placeholder=@DateTime.Now; />
+                     </div>
+                 </div>
+                 <div>
+                    <label></label>
+                 </div>
+                <label>Medicamentos de la receta</label>
+                <button class="btn btn-warning" id="btnAgregarMedicamento">Agregar medicamento</button>
+                <table class="table table-striped" id="tbListaMedicamentos">
+                    <thead>
+                        <tr>
+                            <th>Medicamento</th>
+                            <th>Dosis</th>
+                            <th>Unidad de medida</th>
+                            <th>Descripción</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <button id="btnGuardarReceta" class="btn btn-secondary">Guardar Receta</button>
+            </div>
+        </div>
+        <div style="border: 2px double #32bfc9;margin: 10px;" class="Tratamiento rounded">
+            <div style="margin: 10px;" name="Tratamiento" class="Tratamiento">
+                <h3>TRATAMIENTO</h3>
+                <div>
+                    <lable>Seleccione Tratamiento</lable>
+                </div>
+                <div class="custom-select">
+                    <select class="form-select" id="selectTratamiento" aria-label="Floating label select example">
+                        <option selected></option>
+                        @foreach (var item in tratamiento)
+                        {
+                            <option>@item.Descripcion</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div style="margin: 10px;">
+            <button class="btn btn-success">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalRegistroMedicamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Medicamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="custom-select">
+                            <label>Medicamento</label>
+                            <select class="form-select" id="selectMedicamento" aria-label="Floating label select example">
+                                <option selected></option>
+                                @foreach (var item in medicamento)
+                                {
+                                    <option>@item.Nombre</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Dosis (número)</label>
+                                <input type="text" class="form-control" id="txtDosis" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="custom-select">
+                            <label>Unidad de Medida</label>
+                            <select class="form-select" id="selectUnidades" aria-label="Floating label select example">
+                                <option selected></option>
+                                <option selected>mg</option>
+                                <option selected>mL</option>
+                                <option selected>cc</option>
+                                <option selected>cdita</option>
+                                <option selected>gotas</option>
+                                <option selected>píldora</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control" id="txtDescripcion" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarMedicamento">Guardar Medicamento</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .containerTable{
+        width: 50%;
+    }
+    #Det_Historia{
+        width: 37%;
+        position: absolute;
+        right: 10%;
+        top: 10%;
+    }
+</style>
+<script>
+    $("#btnAgregarMedicamento").click(function () {
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroMedicamento'))
+        $("#selectMedicamento").val("");
+        $("#txtDosis").val("");
+        $("#selectUnidades").val("");
+        $("#txtDescripcion").val("");
+        myModal.show();
+    });
+    $("#btnGuardarMedicamento").click(function (){
+        var medicamento = $("#selectMedicamento").val();
+        var dosis = $("#txtDosis").val();
+        var unidadMedida = $("#selectUnidades").val();
+        var descripcion = $("#txtDescripcion").val();
+
+        var newRow = $("<tr>");
+        var medicamentoCell = $("<td>").text(medicamento);
+        var dosisCell = $("<td>").text(dosis);
+        var unidadMedidaCell = $("<td>").text(unidadMedida);
+        var descripcionCell = $("<td>").text(descripcion);
+
+        newRow.append(medicamentoCell, dosisCell, unidadMedidaCell, descripcionCell);
+        $("#tbListaMedicamentos").append(newRow);
+
+        $("#modalRegistroMedicamento").modal("hide");
+    });
+    $("#btnGuardarReceta").click(function (){
+        var vFecha = new Date();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GuardarReceta","Medico", new{Area="Medico"})',
+            Cache: false,
+            data: {
+                fecha: vFecha,
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    alert("Se registró la receta correctamente!");
+                    var fila = $("#tbListaMedicamentos").first('tr');
+                    var columnas = fila.find('td');
+                    for (var i in Range(columnas)) {
+                        let vMedicamento = columnas.eq(0).text();
+                        let vDosis = columnas.eq(1).text();
+                        let vUnidad = columnas.eq(2).text();
+                        let vDescripcion = columnas.eq(3).text();
+
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("GuardarDetReceta","Medico", new{Area = "Medico"})',
+                            Cache: false,
+                            data: {
+                                medicamento: vMedicamento,
+                                dosis: vDosis,
+                                unidad: vUnidad,
+                                descripcion: vDescripcion
+                            },
+                            success: function (valorRespuesta) {
+                                if (valorRespuesta) {
+                                    alert("Se registró el detalle receta correctamente!");
+                                } else {
+                                    alert("Ocurrió un error al registrar el detalle!")
+                                }
+                            }
+                        });
+                    }
+
+                            @*var valores = [];
+                            $("#tbListaMedicamentos tbody tr").each(function () {
+                            var medicamento = $(this).find(".medicamento").text();
+                            var dosis = $(this).find(".dosis").text();
+                            var unidadMedida = $(this).find(".unidadMedida").text();
+                            var descripcion = $(this).find(".descripcion").text();
+                            var objeto = {
+                            medicamento: medicamento,
+                            dosis: dosis,
+                            unidadMedida: unidadMedida,
+                            descripcion: descripcion
+                            };
+                            valores.push(objeto);
+                            });
+
+                            $.ajax({
+                            url: '@Url.Action("GuardarDetReceta","Medico", new{Area = "Medico"})',
+                            type: "POST",
+                            data: { valores: valores },
+                            success: function (response) {
+                            alert("Se registró el detalle correctamente!");
+                            },
+                            error: function (error) {
+                            alert("Ocurrió un error al registrar el detalle!");
+                            }
+                            });*@
+                } else {
+                    alert("Ocurrió un error al registrar la Cita!");
+                }
+            }
+        });
+    });
+</script>
