@@ -16,7 +16,7 @@
 }
 <H2>Paciente @Nombre @Apellido</H2>
 <a href="@Url.Action("Index","Medico",new {idM = idM})" id="retorno" button class="btn btn-dark" role="button">Retornar</a>
-<div class="containerTable">
+<div class="containerTable" id="contenedorTabla">
     <table class="table table-striped" id="tbListadoHistoria">
         <thead>
             <tr>
@@ -24,6 +24,7 @@
                 <th>Nombre del medico</th>
                 <th>Apellido del medico</th>
                 <th>Id receta</th>
+                <th>Ver Receta</th>
                 <th>Id tratamiento</th>
                 <th></th>
             </tr>
@@ -36,6 +37,9 @@
                     <td>@medicos[i].Nombre</td>
                     <td>@medicos[i].Apellido</td>
                     <td>@Historia[i].IdRecetaMedica</td>
+                    <td>
+                        <button class="btn btn-warning btnVerReceta" id="btnVerRecetas" data-id="@Historia[i].IdRecetaMedica">Ver</button>
+                    </td>
                     <td>@Historia[i].IdTratamiento</td>
                 </tr>
             }
@@ -96,7 +100,59 @@
         <input type="text" class="form-control" id="txtApellido" value="@Apellido" />
     </div>
 </div>
+<!--Modal2-->
+<!-- Modal -->
+<div class="modal fade" id="modalVerReceta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ver Receta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
 
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Medicamento</label>
+                                <input type="text" class="form-control" id="txtMedicamento" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Dosis</label>
+                                <input type="text" class="form-control" id="txtDosis" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Unidad de Medida</label>
+                                <input type="text" class="form-control" id="txtUnidad" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label>Descripción</label>
+                                <input type="text" class="form-control" id="txtDescripcion" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <input type="hidden" value="-1" id="hidIdTratamiento" />
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="modalRegistroMedicamento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -196,6 +252,27 @@
         $("#tbListaMedicamentos").append(newRow);
 
         $("#modalRegistroMedicamento").modal("hide");
+    });
+    $(document).ready(function () {
+        $("#tbListadoHistoria").on('click', '.btnVerReceta', function () {
+            let vIdReceta = $(this).attr('data-id');
+            var myModal = new bootstrap.Modal(document.getElementById('modalVerReceta'));
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("ObtenerReceta", "Medico", new {Area="Medico"})',
+                Cache: false,
+                data: { id: vIdReceta },
+                success: function (objReceta) {
+                    console.log("El valor de objReceta es: " + JSON.stringify(objReceta))
+                    $("#txtMedicamento").val(objReceta.medicamento);
+                    $("#txtDosis").val(objReceta.dosis);
+                    $("#txtUnidad").val(objReceta.unidad);
+                    $("#txtDescripcion").val(objReceta.descripcion);
+                    myModal.show();
+                }
+            });
+
+        });
     });
     $("#btnGuardarReceta").click(function (){
         var vFecha = new Date();

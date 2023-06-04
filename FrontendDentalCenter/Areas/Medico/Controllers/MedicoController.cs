@@ -6,6 +6,7 @@ using FrontendDentalCenter.Services;
 using FrontendDentalCenter.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.Build.Framework;
 using Microsoft.JSInterop;
 using System.Data.SqlTypes;
 using System.Drawing;
@@ -200,6 +201,32 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             exito = await CabRecetaServices.InsertReceta(objDetReceta);
 
             return Json(exito);
+        }
+        public async Task<IActionResult> ObtenerReceta(int id)
+        {
+            var recetas = await CabRecetaServices.GetRecetaByIdCab(id);
+            var medicamentos = await MedicamentoServices.GetMedicamentos();
+            var unaReceta = new ValoresTablaMedicamentoViewModel();
+            foreach (var item in recetas)
+            {
+                string nombreMedicamento = "";
+                foreach(var item2 in medicamentos)
+                {
+                    if(item.IdMedicamento==item2.IdMedicamento)
+                    {
+                        nombreMedicamento = item2.Nombre;
+                    }
+                }
+
+                unaReceta = new ValoresTablaMedicamentoViewModel()
+                {
+                    Medicamento = nombreMedicamento,
+                    Dosis = item.Dosis.ToString(),
+                    UnidadMedida = item.UnidadMedida,
+                    Descripcion = item.Descripcion
+                };
+            }
+            return Json(unaReceta);
         }
     }
 }

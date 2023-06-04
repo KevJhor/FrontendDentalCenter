@@ -1,4 +1,5 @@
-﻿using FrontendDentalCenter.Areas.Paciente.Models;
+﻿using FrontendDentalCenter.Areas.Medico.Models;
+using FrontendDentalCenter.Areas.Paciente.Models;
 using FrontendDentalCenter.ViewModels;
 using Newtonsoft.Json;
 using System.Text;
@@ -39,14 +40,14 @@ namespace FrontendDentalCenter.Services
             return cabReceta;
         }
 
-        public static async Task<RecetaViewModel> GetRecetaByIdCab(int id)
+        public static async Task<IEnumerable<RecetaViewModel>> GetRecetaByIdCab(int id)
         {
             var url = "http://localhost:5010/api/Receta/Receta/idCab?id="+id;
             using var htppClient = new HttpClient();
             using var response = await htppClient.GetAsync(url);
             var apiResponse = await response.Content.ReadAsStringAsync();
-            var cabReceta = JsonConvert.DeserializeObject<RecetaViewModel>(apiResponse);
-            return cabReceta;
+            var cita = JsonConvert.DeserializeObject<IEnumerable<RecetaViewModel>>(apiResponse);
+            return cita;
         }
 
 
