@@ -5,6 +5,7 @@ using FrontendDentalCenter.Providers;
 using FrontendDentalCenter.Services;
 using FrontendDentalCenter.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.JSInterop;
 using System.Data.SqlTypes;
 using System.Drawing;
@@ -103,8 +104,23 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             //ViewBag.ListHistoriaMed = historiaMed;
             return View();
         }*/
-        public async Task<IActionResult> ListaHistoriaMedica(int id, string Nombre, string Apellido)
+        public async Task<IActionResult> ListaHistoriaMedica(int id, string Nombre, string Apellido, int idCita, int idM)
         {
+            var Paciente = await PacienteService.GetPacientes();
+            int idPaciente = 0;
+            foreach(var item in Paciente)
+            {
+                if (Nombre == item.Nombre)
+                {
+                    idPaciente = item.IdPaciente;
+                }
+            }
+            var Citas = await CitaServices.GetCitaByPacienteId(idPaciente);
+            List<CitaViewModel> listaCitas = new List<CitaViewModel>();
+            //foreach (var item in Citas)
+            //{
+            //    //Agregar a una lista de citas todas las que la hisotria medica
+            //}
             var Historia = await MedicoService.GetHistoriaMedicaByIdPaciente(id);
             var Tratamiento = await TratamientoService.GetTratamientos();
             List<CabHistoriaMedicaViewModel> cabHistoria = new List<CabHistoriaMedicaViewModel>();
@@ -124,6 +140,8 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             ViewBag.Apellidos = Apellido;
             ViewBag.Tratamiento = Tratamiento;
             ViewBag.Medicamento = Medicamento;
+            ViewBag.idCita = idCita;
+            ViewBag.idM = idM;
             //ViewBag.ListHistoriaMed = historiaMed;
             return View();
         }
@@ -137,6 +155,61 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
                 Fecha = hoy
             };
             exito = await CabRecetaServices.InsertCabReceta(objReceta);
+            return Json(exito);
+        }
+        public async Task<IActionResult> GuardarDetHistoria(string tratamiento, string idPac, string apellido, int idCita)
+        {
+            var pacientes = await PacienteService.GetPacientes();
+            var idPaciente=0;
+            foreach (var item in pacientes)
+            {
+                if(item.Nombre == idPac)
+                {
+                    idPaciente = item.IdPaciente;
+                }
+            }
+            bool exito = true;
+            var cabReceta = await CabRecetaServices.GetUltimaCabReceta();
+            int idReceta = cabReceta.IdRecetaMedica;
+            var cabHistoria = await HistoriaMedicaService.GetHistoriaMedicaIdPac(idPaciente);
+            var tratamientos = await TratamientoService.GetTratamientos();
+            //Esto es para conseguir el idMedico
+            var cita = await CitaServices.GetCitaByPacienteId(idPaciente);
+            int idDoctor = 0;
+
+            foreach (var item in cita)
+            {
+                if(item.IdCita == idCita)
+                {
+                    idDoctor = (int)item.IdMedico;
+                }
+                
+            }
+            int idTratamiento = 0;
+
+            foreach (var item in tratamientos)
+            {
+                if (tratamiento == item.Descripcion)
+                {
+                    idTratamiento = item.IdTratamiento;
+                }
+            }
+            int idCabHistoria = 0;
+
+            foreach (var item in cabHistoria)
+            {
+                idCabHistoria = item.IdHistoriaMedica;
+            }
+            var objDetHistoria = new HistoriaMedicaViewModelPost()
+            {
+                IdHistoriaMedica = idCabHistoria,
+                IdCita = idCita,
+                IdMedico = idDoctor,
+                IdAsistente = 1,
+                IdRecetaMedica = idReceta,
+                IdTratamiento = idTratamiento
+            };
+            exito = await HistoriaMedicaService.InsertDetHistoria(objDetHistoria);
             return Json(exito);
         }
         public async Task<IActionResult> GuardarDetReceta(string medicamento, string dosis, string unidad, string descripcion)

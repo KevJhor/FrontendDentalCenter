@@ -6,7 +6,9 @@
     var Medico = ViewBag.Medico as MedicoViewModel;
     var citas = ViewBag.citaList as IEnumerable<CitaViewModel>;
 }
-
+<div>
+    <a href="@Url.Action("Index","Medico",new {idM = Medico.IdMedico})" id="retorno" button class="btn btn-dark" role="button">Retornar</a>
+</div>
 <table class="table table-striped" id="tbListadoHistoriaMedica">
     <thead>
         <tr>
@@ -32,7 +34,7 @@
                     <td>@item.Apellido</td>
                     <td>@item.Dni</td>
                     <td>
-                        <a href="@Url.Action("ListaHistoriaMedica","Medico",new{ id=item.IdPaciente, Nombre=item.Nombre,Apellido=@item.Apellido})" class="btn btn-success">Ver Historial</a>
+                        <a href="@Url.Action("ListaHistoriaMedica","Medico",new{ id=item.IdPaciente, Nombre=item.Nombre,Apellido=@item.Apellido,idCita=@item2.IdCita, idM = Medico.IdMedico})" class="btn btn-success">Ver Historial</a>
                         @*<a href="@Url.Action("RegistrarHistoria", "HistoriaMedica" , new { Nombre=item.Nombre,Correo =@item.Correo ,Apellido=@item.Apellido, Telefono=@item.Telefono, Dni=@item.Dni, NombreM =Medico.Nombre, ApellidoM = Medico.Apellido})" class="btn btn-success">Registrar Historial</a>*@
                     </td>
                 </tr>
@@ -50,5 +52,9 @@
     body {
         font-family: arial narrow;
     }
-
+    #retorno{
+        position: fixed;
+        right: 15px;
+        bottom: 70px;
+    }
 </style>
