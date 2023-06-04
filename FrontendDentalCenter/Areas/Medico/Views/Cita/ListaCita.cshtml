@@ -22,10 +22,11 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in pacientes)
+        @*foreach (var item in pacientes)
         {
             @foreach (var item2 in citas)
             {
+                var idCita = item2.IdCita;
                 <tr>
                     <td>@item2.IdCita</td>
                     <td>@item2.Estado</td>
@@ -36,10 +37,35 @@
                     <td>
                         <a href="@Url.Action("ListaHistoriaMedica","Medico",new{ id=item.IdPaciente, Nombre=item.Nombre,Apellido=@item.Apellido,idCita=@item2.IdCita, idM = Medico.IdMedico})" class="btn btn-success">Ver Historial</a>
                         @*<a href="@Url.Action("RegistrarHistoria", "HistoriaMedica" , new { Nombre=item.Nombre,Correo =@item.Correo ,Apellido=@item.Apellido, Telefono=@item.Telefono, Dni=@item.Dni, NombreM =Medico.Nombre, ApellidoM = Medico.Apellido})" class="btn btn-success">Registrar Historial</a>*@
-                    </td>
+                    @*</td>
                 </tr>
         
             }
+        }*@
+        @foreach(var item in citas){
+            var Nombre = "";
+            var Apellido = "";
+            int DNI = 0 ;
+            foreach(var item2 in pacientes){
+                if(item.IdPaciente==item2.IdPaciente){
+                    Nombre = item2.Nombre;
+                    Apellido = item2.Apellido;
+                    DNI = (int)item2.Dni;
+                }
+
+            }
+            <tr>
+                <td>@item.IdCita</td>
+                <td>@item.Estado</td>
+                <td>@item.FechaHora</td>
+                <td>@Nombre</td>
+                <td>@Apellido</td>
+                <td>@DNI</td>
+                <td>
+                    <a href="@Url.Action("ListaHistoriaMedica","Medico",new{ id=item.IdPaciente, Nombre=Nombre,Apellido=Apellido,idCita=@item.IdCita, idM = Medico.IdMedico})" class="btn btn-success">Ver Historial</a>
+                    @*<a href="@Url.Action("RegistrarHistoria", "HistoriaMedica" , new { Nombre=item.Nombre,Correo =@item.Correo ,Apellido=@item.Apellido, Telefono=@item.Telefono, Dni=@item.Dni, NombreM =Medico.Nombre, ApellidoM = Medico.Apellido})" class="btn btn-success">Registrar Historial</a>*@
+                </td>
+            </tr>
         }
     </tbody>
 </table>
