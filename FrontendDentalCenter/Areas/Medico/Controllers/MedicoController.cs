@@ -17,12 +17,6 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
     public class MedicoController : Controller
     {
 
-        //private int idMedico;
-        /*public MedicoController(int id)
-        {
-            idMedico = id;
-            
-        }*/
         private int _miVariable;
         public int MiVariable
         {
@@ -59,14 +53,7 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
         {
             return View();
         }
-       
-
-        /*public IActionResult Tratamiento()
-        {
-            var Tratamientos = TratamientoService.GetTratamientos();
-            ViewBag.TratamientoList = Tratamientos;
-            return View();
-        }*/
+      
 
         public async Task<IActionResult> Tratamiento()
         {
@@ -82,28 +69,6 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
 
 
         }
-       
-        /*public async Task<IActionResult> ListaHistoriaMedicaByPaciente(int id,string Nombre, string Apellido)
-        {
-            var Historia = await MedicoService.GetHistoriaMedicaByIdPaciente(id);
-            List<CabHistoriaMedicaViewModel> cabHistoria = new List<CabHistoriaMedicaViewModel>();
-            List<MedicoViewModel> medicos = new List<MedicoViewModel>();
-            //List<HistoriaMedicaViewModel> historiaMed = new List<HistoriaMedicaViewModel>();
-            
-            foreach(var item in Historia)
-            {
-                cabHistoria.AddRange(await MedicoService.GetCabHistoriaMedicabyId(item.IdHistoriaMedica));
-                medicos.Add(await MedicoService.GetMedicosbyId(item.IdMedico));
-                //historiaMed.AddRange(await HistoriaMedicaService.GetHistoriaMedicaIdCab(item.IdHistoriaMedica));
-            }
-            ViewBag.HistoriaList = Historia;
-            ViewBag.CabHistoriaList = cabHistoria;
-            ViewBag.MedicoList = medicos;
-            ViewBag.Nombres = Nombre;
-            ViewBag.Apellidos = Apellido;
-            //ViewBag.ListHistoriaMed = historiaMed;
-            return View();
-        }*/
         public async Task<IActionResult> ListaHistoriaMedica(int id, string Nombre, string Apellido, int idCita, int idM)
         {
             var Paciente = await PacienteService.GetPacientes();
@@ -117,21 +82,15 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             }
             var Citas = await CitaServices.GetCitaByPacienteId(idPaciente);
             List<CitaViewModel> listaCitas = new List<CitaViewModel>();
-            //foreach (var item in Citas)
-            //{
-            //    //Agregar a una lista de citas todas las que la hisotria medica
-            //}
             var Historia = await MedicoService.GetHistoriaMedicaByIdPaciente(id);
             var Tratamiento = await TratamientoService.GetTratamientos();
             List<CabHistoriaMedicaViewModel> cabHistoria = new List<CabHistoriaMedicaViewModel>();
             List<MedicoViewModel> medicos = new List<MedicoViewModel>();
             var Medicamento = await MedicamentoServices.GetMedicamentos();
-            //List<HistoriaMedicaViewModel> historiaMed = new List<HistoriaMedicaViewModel>();
             foreach (var item in Historia)
             {
                 cabHistoria.AddRange(await MedicoService.GetCabHistoriaMedicabyId(item.IdHistoriaMedica));
                 medicos.Add(await MedicoService.GetMedicosbyId(item.IdMedico));
-                //historiaMed.AddRange(await HistoriaMedicaService.GetHistoriaMedicaIdCab(item.IdHistoriaMedica));
             }
             ViewBag.HistoriaList = Historia;
             ViewBag.CabHistoriaList = cabHistoria;
@@ -142,7 +101,6 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
             ViewBag.Medicamento = Medicamento;
             ViewBag.idCita = idCita;
             ViewBag.idM = idM;
-            //ViewBag.ListHistoriaMed = historiaMed;
             return View();
         }
         public async Task<IActionResult> GuardarReceta(string fecha)
@@ -240,36 +198,6 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
                 Descripcion = descripcion
             };
             exito = await CabRecetaServices.InsertReceta(objDetReceta);
-
-            //var medicamentos = await MedicamentoServices.GetMedicamentos();
-            //var cabReceta = await CabRecetaServices.GetUltimaCabReceta();
-            //int idReceta = cabReceta.IdRecetaMedica;
-
-            //foreach (var valor in valores)
-            //{
-
-            //    var medicamento = valor.Medicamento;
-            //    var idMedicamento = 0;
-            //    foreach (var item in medicamentos)
-            //    {
-            //        if(item.Nombre == medicamento)
-            //        {
-            //            idMedicamento = item.IdMedicamento;
-            //        }
-            //    }
-            //    var dosis = valor.Dosis;
-            //    var unidadMedida = valor.UnidadMedida;
-            //    var descripcion = valor.Descripcion;
-            //    var objDetReceta = new RecetaViewModelPost()
-            //    {
-            //        IdRecetaMedica = idReceta,
-            //        IdMedicamento = idMedicamento,
-            //        Dosis = Double.Parse(dosis),
-            //        UnidadMedida = unidadMedida,
-            //        Descripcion = descripcion
-            //    };
-            //    exito = await CabRecetaServices.InsertReceta(objDetReceta);
-            //}
 
             return Json(exito);
         }

@@ -8,4 +8,11 @@
         public string? Estado { get; set; }
         public DateTime? FechaHora { get; set; }
     }
+    public class CitaViewModelPost
+    {
+        public int? IdPaciente { get; set; }
+        public int? IdMedico { get; set; }
+        public string? Estado { get; set; }
+        public DateTime? FechaHora { get; set; }
+    }
 }

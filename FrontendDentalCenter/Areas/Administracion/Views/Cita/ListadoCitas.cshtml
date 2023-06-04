@@ -1,0 +1,36 @@
+﻿@using FrontendDentalCenter.ViewModels
+@using FrontendDentalCenter.Areas.Medico.Models
+
+@{
+    var citas = ViewBag.citaList as IEnumerable<CitaViewModel>;
+}
+<table class="table table-striped" id="tbListadoCita">
+    <thead>
+        <tr>
+            <th>Id Cita</th>
+            <th>Id Paciente</th>
+            <th>Id Medico</th>
+            <th>Estado</th>
+            <th>FechaHora</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in citas)
+        {
+            <tr>
+                <td>@item.IdCita</td>
+                <td>@item.IdPaciente</td>
+                <td>@item.IdMedico</td>
+                <td>@item.Estado</td>
+                <td>@item.FechaHora</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    loadDatatable();
+    function loadDatatable() {
+        $('#tbListadoCita').DataTable();
+    }
+</script>

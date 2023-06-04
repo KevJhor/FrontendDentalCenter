@@ -1,0 +1,150 @@
+﻿<div class="alert alert-primary">
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Gestión de Citas</h3>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalRegistroCita" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Gestión de Citas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Id Paciente</label>
+                                <input type="text" class="form-control" id="txtIdPaciente" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Id Medico</label>
+                                <input type="text" class="form-control" id="txtIdMedico" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Estado</label>
+                                <input type="text" class="form-control" id="txtEstado" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class='col-sm-4'>
+                                <div class="form-group">
+                                    <div class='input-group date' id='datetimepicker'>
+                                        <input type='text' class="form-control" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $('#datetimepicker1').datetimepicker();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarCita">Guardar Cambios</button>
+                <input type="hidden" value="-1" id="hidIdCita" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divListadoCitas">
+</div>
+
+<script>
+    $("#divListadoCitas").on('click', '.btnEditarCita', function () {
+        let vIdCita = $(this).attr('data-id');
+        $("#hidIdCita").val(vIdCita);
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroCita'));
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("Obtener", "Cita", new {Area="Administracion"})',
+            Cache: false,
+            data: { id: vIdCita },
+            success: function (objCita) {
+                console.log("El valor de objCita es: " + JSON.stringify(objCita))
+                $("#txtIdPaciente").val(objCita.idPaciente);
+                $("#txtIdMedico").val(objCita.idMedico);
+                $("#txtEstado").val(objCita.estado);
+                $("#datetimepicker").val(objCita.fechaHora);
+                myModal.show();
+            }
+        });
+
+    })
+
+    $("#btnGuardarCita").click(function () {
+        let vIdCita = $("#hidIdCita").val();
+        let vIdPaciente = $("#txtIdPaciente").val()
+        let vIdMedico = $("#txtIdMedico").val()
+        let vEstapo = $("#txtEstado").val()
+        let vFechaHora = $("#datetimepicker").val()
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroCita'))
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Guardar","Cita", new{Area="Administracion"})',
+            Cache: false,
+            data: {
+                idCita: vIdCita,
+                idPaciente: vIdPaciente,
+                idMedico: vIdMedico,
+                estado: vEstado,
+                fechaHora: vFechaHora
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    alert("Se registró correctamente!");
+                    CargarListadoCita();
+                    myModal.hide();
+                } else {
+                    alert("Ocurrió un error al registrar la cita!");
+                }
+            }
+        });
+
+    });
+
+    $("#btnAgregarCita").click(function () {
+        var myModal = new bootstrap.Modal(document.getElementById('modalRegistroCita'))
+        $("#hidIdCita").val("");
+        $("#txtIdPaciente").val("");
+        $("#txtIdMedico").val("");
+        $("#txtEstado").val("");
+        $("#datetimepicker").val("10/10/2022 0:00:00");
+        myModal.show();
+    });
+    CargarListadoCita();
+    function CargarListadoCita() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("ListadoCitas", "Cita", new {Area = "Administracion"})',
+            cache: false,
+            success: function (dataHTML) {
+                $("#divListadoCitas").html(dataHTML);
+            }
+        });
+    }
+</script>
