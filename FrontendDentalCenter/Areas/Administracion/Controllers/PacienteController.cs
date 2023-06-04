@@ -1,7 +1,9 @@
 ﻿
+using FrontendDentalCenter.Areas.Paciente.Models;
 using FrontendDentalCenter.Services;
 using FrontendDentalCenter.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace FrontendDentalCenter.Areas.Administracion.Controllers
 {
@@ -12,7 +14,18 @@ namespace FrontendDentalCenter.Areas.Administracion.Controllers
         {
             return View();
         }
-
+        public IActionResult Register()
+        {
+            return View();
+        }
+        public async Task<IActionResult> RegistroCita(string correo)
+        {
+            var Medicos = await MedicoService.GetMedicos();
+            var Especialidades = await EspecialidadService.GetEspecialidades();
+            ViewBag.MedicoList = Medicos;
+            ViewBag.Especialidades = Especialidades;
+            return View();
+        }
         public async Task<IActionResult> Listado()
         {
             var pacientes = await PacienteService.GetPacientes();
@@ -23,6 +36,45 @@ namespace FrontendDentalCenter.Areas.Administracion.Controllers
         {
             var paciente = await PacienteService.GetPacientesbyId(id);
             return Json(paciente);
+        }
+        public async Task<IActionResult> CrearCita(int idCita, string idPaciente,
+                                                string nombreMedico, string estado, string fecha, string hora)
+        {
+            bool exito = true;
+            var pacientes = await PacienteService.GetPacientes();
+            var idPac = 0;
+            foreach (var item in pacientes)
+            {
+                if(item.Correo == idPaciente)
+                {
+                    idPac = item.IdPaciente;
+                }
+            }
+            int idMedico = 0;
+            string compuesto = "";
+            string? fechaYhora = "";
+            fechaYhora = fecha + ' ' + hora;
+            string formato = "yyyy-MM-dd HH:mm";
+            DateTime fechaCita;
+            DateTime.TryParseExact(fechaYhora, formato, CultureInfo.InvariantCulture, DateTimeStyles.None, out fechaCita);
+            var medicos = await MedicoService.GetMedicos();
+            foreach (var item in medicos)
+            {
+                compuesto = item.Nombre + ' ' + item.Apellido;
+                if (compuesto == nombreMedico)
+                {
+                    idMedico = item.IdMedico;
+                }
+            }
+            var objCita = new PacienteCitaViewModelPost()
+            {
+                IdPaciente = idPac,
+                IdMedico = idMedico,
+                Estado = estado,
+                FechaHora = fechaCita
+            };
+            exito = await CitaServices.InsertCita(objCita);
+            return Json(exito);
         }
         public async Task<IActionResult> Guardar(int idPaciente, string nombre, string apellido,
                                                 int dni, DateTime fechaDeNac, string telefono,

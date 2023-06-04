@@ -1,0 +1,134 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FrontendDentalCenter</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FrontendDentalCenter.styles.css" asp-append-version="true" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jszip-2.5.0/dt-1.12.1/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js"></script>
+</head>
+<body>
+    <div class="container" id="form-register">
+            <div class="row" id="div-login">
+                <div class="col-md-4">
+                    <img src="https://img.freepik.com/premium-vector/online-registration-sign-up-login-account-smartphone-app-user-interface-with-secure-password-mobile-application-ui-web-banner-access-cartoon-people-vector-illustration_2175-1060.jpg?w=2000" width="300" height="200" />
+                </div>
+                <div class="col-md-3">
+                    <div class="col">
+                        <div class="row">
+                            <h1>Registro de Paciente</h1>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input required type="text" id="txtNombre" class="form-control" placeholder="Nombre">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input required type="text" id="txtApellido" class="form-control" placeholder="Apellido">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <input required type="text" id="txtCorreo" class="form-control" aria-describedby="emailHelp" placeholder="Dirección email">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <input required type="text" id="txtDNI" class="form-control" placeholder="DNI">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <input required type="text" id="txtTelefono" class="form-control" placeholder="Teléfono de contacto">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <input required type="text" id="txtContraseña" class="form-control" placeholder="Contraseña">
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btnRegistrar">Registrarse</button>
+                            @*<a href="#">Forgot password?</a>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+
+</html>
+<script>
+    $("#form-register").on('click', '.btnRegistrar', function () {
+        let vNombre = $("#txtNombre").val()
+        let vApellido = $("#txtApellido").val()
+        let vCorreo = $("#txtCorreo").val()
+        let vDNI = $("#txtDNI").val()
+        let vTelefono = $("#txtTelefono").val()
+        let vContraseña = $("#txtContraseña").val()
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Guardar","Register", new{Area=""})',
+            Cache: false,
+            data: {
+                nombre: vNombre,
+                apellido: vApellido,
+                DNI: vDNI,
+                correo: vCorreo,
+                telefono: vTelefono
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GuardarUsuario","Register", new{Area=""})',
+                        Cache: false,
+                        data: {
+                            correo: vCorreo,
+                            contraseña: vContraseña
+                        },
+                        success: function (valorRespuesta) {
+                            if (valorRespuesta) {
+                                alert("Se registró correctamente!");
+                                window.location = "http://localhost:5181/Administracion/Paciente/RegistroCita/correo=" + vCorreo;
+                            } else {
+                                alert("Ocurrió un error al registrar el Usuario!");
+                            }
+                        }
+                    });
+                } else {
+                    alert("Ocurrió un error al registrar el Paciente!");
+                }
+            }
+        });
+        
+    });
+
+</script>
+<style>
+    #form-login {
+        margin-top: 10%;
+    }
+    #form-register {
+        margin-top: 8%;
+    }
+    #div-login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+    }
+</style>

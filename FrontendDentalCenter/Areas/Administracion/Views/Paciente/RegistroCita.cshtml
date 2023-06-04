@@ -1,0 +1,182 @@
+﻿@using FrontendDentalCenter.ViewModels;
+@using FrontendDentalCenter.Areas.Paciente.Models;
+@{
+    var medico = ViewBag.MedicoList as IEnumerable<MedicoViewModel>;
+    var especialidad = ViewBag.Especialidades as IEnumerable<EspecialidadViewModel>;
+}
+
+<div id="imagen">
+    <img src="https://i.imgur.com/yEVJxai.png" width="360" height="500" />
+</div>
+<div class="container">
+    <div class="container" id="contenedor">
+        <div>
+            <lable>Seleccione Especialidad</lable>
+        </div>
+        <div class="custom-select">
+            <select class="form-select" id="selectEspecialidad" aria-label="Floating label select example">
+                <option selected></option>
+                @foreach (var item in especialidad)
+                {
+                    <option>@item.Descripcion</option>
+                }
+            </select>
+        </div>
+        <div>
+            <lable>Seleccione Doctor</lable>
+        </div>
+        <div class="custom-select">
+            <select class="form-select" id="selectMedico" aria-label="Floating label select example">
+                <option selected></option>
+                @foreach (var item in medico)
+                {
+                    <option>@item.Nombre @item.Apellido</option>
+                }
+            </select>
+
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Nombres</label>
+                <input type="text" class="form-control" id="txtNombre" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Apellidos</label>
+                <input type="text" class="form-control" id="txtApellido" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>DNI</label>
+                <input type="text" class="form-control" id="txtDNI" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="text" class="form-control" id="txtEmail" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Telefono</label>
+                <input type="text" class="form-control" id="txtTelefono" />
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="text" class="form-control" id="txtContraseña" />
+            </div>
+        </div>
+        <div>
+            <lable>Seleccione Fecha y Hora:</lable>
+        </div>
+        <fieldset class="dato-fecha">
+            <label>
+                <span>Fecha:</span>
+                <input type="date" name="fecha" id="txtFecha">
+            </label>
+            <label>
+                <span>Hora:</span>
+                <input type="time" name="hora" id="txtHora">
+            </label>
+        </fieldset>
+        <label></label>
+        <div>
+            <button class="btn btn-success" type="submit" id="btnGenerarCita">
+                Generar Cita
+            </button>
+            <a id="retorno" href="@Url.Action("Index","Home",new {Area="Administracion" })" button class="btn btn-danger" role="button">Cancelar</a>
+        </div>
+    </div>
+</div>
+<style>
+    .custom-select{
+        width: 33.3%;
+    }
+    #imagen{
+        position: absolute;
+        right: 15%;
+        top: 12%;
+    }
+    #contenedor{
+        position: relative;
+        left: 10%;
+        top: 12%;
+    }
+</style>
+<script>
+    $("#btnGenerarCita").click(function () {
+        let vNombre = $("#txtNombre").val()
+        let vApellido = $("#txtApellido").val()
+        let vCorreo = $("#txtEmail").val()
+        let vDNI = $("#txtDNI").val()
+        let vTelefono = $("#txtTelefono").val()
+        let vContraseña = $("#txtContraseña").val()
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Guardar","Register", new{Area=""})',
+            Cache: false,
+            data: {
+                nombre: vNombre,
+                apellido: vApellido,
+                DNI: vDNI,
+                correo: vCorreo,
+                telefono: vTelefono
+            },
+            success: function (valorRespuesta) {
+                if (valorRespuesta) {
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("GuardarUsuario","Register", new{Area=""})',
+                        Cache: false,
+                        data: {
+                            correo: vCorreo,
+                            contraseña: vContraseña
+                        },
+                        success: function (valorRespuesta) {
+                            if (valorRespuesta) {
+                                alert("Se registró correctamente!");
+                                let vIdPaciente = $("#txtEmail").val()
+                                let vEspecialidad = $('#selectEspecialidad').val();
+                                let vNombreMedico = $("#selectMedico").val()
+                                let vEstado = "Activa"
+                                let vFecha = $("#txtFecha").val()
+                                let vHora = $("#txtHora").val()
+                                $.ajax({
+                                    type: "POST",
+                                    url: '@Url.Action("CrearCita","Paciente", new{Area="Administracion"})',
+                                    Cache: false,
+                                    data: {
+                                        idPaciente: vIdPaciente,
+                                        especialidad: vEspecialidad,
+                                        nombreMedico: vNombreMedico,
+                                        estado: vEstado,
+                                        fecha: vFecha,
+                                        hora: vHora,
+                                    },
+                                    success: function (valorRespuesta) {
+                                        if (valorRespuesta) {
+                                            alert("Se registró la cita correctamente!");
+                                            window.location = "http://localhost:5181/Administracion";
+                                        } else {
+                                            alert("Ocurrió un error al registrar la Cita!");
+                                        }
+                                    }
+                                });
+                            } else {
+                                alert("Ocurrió un error al registrar el Usuario!");
+                            }
+                        }
+                    });
+                } else {
+                    alert("Ocurrió un error al registrar el Paciente!");
+                }
+            }
+        });
+    });
+
+</script>

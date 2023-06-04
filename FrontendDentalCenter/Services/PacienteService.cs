@@ -35,6 +35,15 @@ namespace FrontendDentalCenter.Services
             PacienteViewModelPost2? pacientes = JsonConvert.DeserializeObject<PacienteViewModelPost2>(apiResponse);
             return pacientes;
         }
+        public static async Task<PacienteViewModel> GetPacientesbyCorreos(string correo)
+        {
+            var url = "http://localhost:5010/api/Paciente/correo?correo=" + correo;
+            using var htppClient = new HttpClient();
+            using var response = await htppClient.GetAsync(url);
+            var apiResponse = await response.Content.ReadAsStringAsync();
+            PacienteViewModel? pacientes = JsonConvert.DeserializeObject<PacienteViewModel>(apiResponse);
+            return pacientes;
+        }
 
         public static async Task<bool> InsertPaciente(PacienteViewModelPost paciente)
         {
