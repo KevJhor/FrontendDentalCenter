@@ -106,8 +106,22 @@
                         },
                         success: function (valorRespuesta) {
                             if (valorRespuesta) {
-                                alert("Se registró correctamente!");
-                                window.location = "http://localhost:5181/Security/Login";
+                                alert("Se registró el usuario correctamente!");
+                                $.ajax({
+                                    type: "POST",
+                                    url: '@Url.Action("GuardarCabHistoria", "Register", new{Area=""})',
+                                    Cache: false,
+                                    data: {
+                                        correo: vCorreo
+                                    },
+                                    success: function (valorRespuesta) {
+                                        if (valorRespuesta) {
+                                            window.location = "http://localhost:5181/Security/Login";
+                                        } else {
+                                            alert("Ocurrió un error al registrar cabHistoria!")
+                                        }
+                                    }
+                                });
                             } else {
                                 alert("Ocurrió un error al registrar el Usuario!");
                             }

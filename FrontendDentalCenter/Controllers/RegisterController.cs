@@ -43,6 +43,27 @@ namespace FrontendDentalCenter.Controllers
             exito = await LoginService.InsertLogin(objLogin);
             return Json(exito);
         }
+        public async Task<IActionResult> GuardarCabHistoria(string correo)
+        {
+            var pacientes = await PacienteService.GetPacientes();
+            var idPaciente = 0;
+            foreach(var item in pacientes)
+            {
+                if(correo == item.Correo)
+                {
+                    idPaciente = item.IdPaciente;
+                }
+            }
+            DateTime hoy = DateTime.Today;
+            bool exito = true;
+            var objCabHistoria = new CabHistoriaMedicaViewModelPost()
+            {
+                IdPaciente = idPaciente,
+                FechaDeActualizacion = hoy
+            };
+            exito = await HistoriaMedicaService.InsertHistoria(objCabHistoria);
+            return Json(exito);
+        }
 
     }
 }

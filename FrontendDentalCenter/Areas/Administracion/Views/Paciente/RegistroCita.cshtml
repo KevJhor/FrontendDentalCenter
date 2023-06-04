@@ -161,7 +161,21 @@
                                     success: function (valorRespuesta) {
                                         if (valorRespuesta) {
                                             alert("Se registró la cita correctamente!");
-                                            window.location = "http://localhost:5181/Administracion";
+                                            $.ajax({
+                                                type: "POST",
+                                                url: '@Url.Action("GuardarCabHistoria", "Register", new{Area=""})',
+                                                Cache: false, 
+                                                data: {
+                                                    correo: vCorreo
+                                                },
+                                                success: function (valorRespuesta){
+                                                    if(valorRespuesta){
+                                                        window.location = "http://localhost:5181/Administracion";
+                                                    }else{
+                                                        alert("Ocurrió un error al registrar cabHistoria!")
+                                                    }
+                                                }
+                                            });
                                         } else {
                                             alert("Ocurrió un error al registrar la Cita!");
                                         }

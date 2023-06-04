@@ -51,8 +51,17 @@ namespace FrontendDentalCenter.Services
             var historiaResponse = JsonConvert.DeserializeObject<bool>(apiResponse);
             return historiaResponse;
         }
+        public static async Task<bool> InsertHistoria(CabHistoriaMedicaViewModelPost cabhistoria)
+        {
+            var url = "http://localhost:5010/api/HistorialMedico/Cabecera";
+            var json = JsonConvert.SerializeObject(cabhistoria);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-
-
+            using var htppClient = new HttpClient();
+            using var response = await htppClient.PostAsync(url, data);
+            var apiResponse = await response.Content.ReadAsStringAsync();
+            var cabhistoriaResponse = JsonConvert.DeserializeObject<bool>(apiResponse);
+            return cabhistoriaResponse;
+        }
     }
 }

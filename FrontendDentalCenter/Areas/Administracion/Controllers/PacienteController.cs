@@ -76,6 +76,7 @@ namespace FrontendDentalCenter.Areas.Administracion.Controllers
             exito = await CitaServices.InsertCita(objCita);
             return Json(exito);
         }
+        
         public async Task<IActionResult> Guardar(int idPaciente, string nombre, string apellido,
                                                 int dni, DateTime fechaDeNac, string telefono,
                                                 string correo, bool frecuente)
