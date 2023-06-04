@@ -217,7 +217,6 @@ namespace FrontendDentalCenter.Areas.Medico.Controllers
                         nombreMedicamento = item2.Nombre;
                     }
                 }
-
                 unaReceta = new ValoresTablaMedicamentoViewModel()
                 {
                     Medicamento = nombreMedicamento,
